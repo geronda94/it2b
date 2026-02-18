@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "solutions": "Solutions",
+    "cases": "Cases",
+    "stack": "Tech Stack"
+  },
+  "hero": {
+    "badge": "Next Gen Development",
+    "title_start": "Accelerating Business",
+    "title_end": "Through Technology",
+    "desc": "We create fast, secure, and scalable solutions, turning complex processes into simple automation.",
+    "btn_discuss": "Discuss Project",
+    "btn_cases": "Our Cases"
+  },
+  "services": {
+    "main_title": "Tech Stack",
+    "main_desc": "We use modern tools to build fault-tolerant systems.",
+    "n8n_title": "n8n Automation",
+    "n8n_text": "API integration and creation of autonomous business processes.",
+    "directus_title": "Directus & Headless",
+    "directus_text": "Data architecture and next-generation admin panels.",
+    "consulting_title": "IT Consulting",
+    "consulting_text": "Technical audit and digital transformation of business."
+  },
+  "modal": {
+    "contact_title": "Start a Project",
+    "contact_desc": "Fill out the form and we will contact you via Telegram.",
+    "lang_title": "Choose Language",
+    "btn_submit": "Submit Request",
+    "name_placeholder": "Your Name",
+    "contact_placeholder": "@telegram or Email"
+  }
+}

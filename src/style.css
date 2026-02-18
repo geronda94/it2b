@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+@layer base {
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Eurostile', ui-sans-serif, system-ui, sans-serif; /* Подставь свой шрифт */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+/* --- Кастомный скроллбар --- */
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-secondary) var(--bg-primary);
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 5px;  /* Тонкий, но удобный */
+  height: 5px; /* Для горизонтального скролла */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary); /* Сливается с фоном */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-secondary); /* Серый в спокойном состоянии */
+  border-radius: 10px;
+  border: 1px solid var(--bg-primary); /* Отступ от края для визуальной легкости */
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-primary); /* Загорается цветом бренда */
+  box-shadow: 0 0 10px var(--brand-glow); /* Эффект неона */
+}
+
+/* При активном перетаскивании (optional) */
+::-webkit-scrollbar-thumb:active {
+  background: var(--brand-secondary);
+}
