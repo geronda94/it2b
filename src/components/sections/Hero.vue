@@ -21,7 +21,7 @@ const emit = defineEmits(['openModal'])
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-primary)] opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-[var(--brand-primary)]"></span>
             </span>
-            {{ t?.hero?.badge || 'Next Gen Development' }}
+            {{ t?.hero?.badge || 'IT to Business' }}
           </div>
           
           <h1 class="text-4xl md:text-6xl font-black text-[var(--text-primary)] mb-6 leading-tight tracking-tight animate-fade-in-up delay-100">
