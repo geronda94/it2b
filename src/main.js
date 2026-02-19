@@ -16,26 +16,19 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // Импортируем конкретные иконки (Solid)
-import { 
-  faSun, 
-  faMoon, 
-  faXmark, 
-  faNetworkWired, 
-  faDatabase, 
-  faLaptopCode, 
-  faS,
-  faGlobe,
-  faArrowRight
+import {
+  faSun, faMoon, faXmark, faNetworkWired, faDatabase, faLaptopCode, faGlobe, faArrowRight, faCheck,
+  faBars, faWind, faServer, faRobot, faMagnifyingGlassChart, faBullseye,  faTableColumns,
+  faMicrochip
 } from '@fortawesome/free-solid-svg-icons'
-
 // Импортируем бренды (Brands)
-import { faGithub, faTelegram } from '@fortawesome/free-brands-svg-icons'
-
+import { faGithub, faTelegram, faVuejs, faDocker, faNodeJs } from '@fortawesome/free-brands-svg-icons'
 // Добавляем их в библиотеку
 library.add(
   faSun, faMoon, faXmark, 
   faNetworkWired, faDatabase, faLaptopCode,
-  faGithub, faGlobe, faArrowRight, faTelegram
+  faGithub, faGlobe, faArrowRight, faTelegram, faCheck, faBars, faWind, faServer,
+  faVuejs, faDocker, faNodeJs, faRobot, faMagnifyingGlassChart, faBullseye, faTableColumns, faMicrochip
 )
 
 
