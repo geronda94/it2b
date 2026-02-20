@@ -3,14 +3,14 @@ import { inject, computed } from 'vue'
 
 const t = inject('t')
 
-// Конфигурация Bento Grid
 const bentoBlocks = computed(() => [
   {
     id: 'frontend',
     title: t.value?.bento?.front_title || 'Фронтенд: Лендинги, Платформы и SPA',
-    desc: t.value?.bento?.front_desc || 'Высококонверсионные лендинги, многостраничные корпоративные сайты и сложные динамические SPA-приложения. Убийца медленного WordPress: премиальный дизайн, мгновенная загрузка и полная адаптивность под любые устройства.',
-    span: 'col-span-1 md:col-span-2 lg:col-span-4', // Занимает ВСЕ 4 колонки (Огромный блок)
-    gradient: 'from-[#42b883]/20 via-[#38bdf8]/10 to-[#FFE16B]/20', // Vue green to Tailwind blue to Pinia yellow
+    // Оставили "Убийцу WordPress", но добавили причину: клиенты не уходят из-за загрузки.
+    desc: t.value?.bento?.front_desc || 'Высококонверсионные лендинги, корпоративные сайты и сложные SPA. Убийца медленного WordPress: ваши клиенты больше не закрывают сайт из-за долгой загрузки. Премиальный дизайн и мгновенный отклик на любых устройствах для роста ваших продаж.',
+    span: 'col-span-1 md:col-span-2 lg:col-span-4',
+    gradient: 'from-[#42b883]/20 via-[#38bdf8]/10 to-[#FFE16B]/20',
     techs: [
         { name: 'Vue 3', slug: 'vuedotjs', color: '#42b883' },
         { name: 'Tailwind CSS', slug: 'tailwindcss', color: '#38bdf8' },
@@ -21,8 +21,9 @@ const bentoBlocks = computed(() => [
   {
     id: 'backend',
     title: t.value?.bento?.backend_title || 'Бэкенд и Боты',
-    desc: t.value?.bento?.backend_desc || 'Асинхронный Python для API, Telegram-ботов и микросервисов. Надежная работа с базами данных и валидацией.',
-    span: 'col-span-1 md:col-span-2 lg:col-span-2', // Занимает 2 колонки
+    // Сместили фокус с просто "работы с БД" на то, что система выдержит нагрузку и не потеряет данные.
+    desc: t.value?.bento?.backend_desc || 'Асинхронный Python для API, Telegram-ботов и микросервисов. Ваша система не "ляжет" при наплыве трафика, а данные клиентов будут надежно сохранены и защищены строгой валидацией.',
+    span: 'col-span-1 md:col-span-2 lg:col-span-2',
     gradient: 'from-[#3776AB]/20 to-[#009688]/20', 
     techs: [
         { name: 'Python', slug: 'python', color: '#3776AB' },
@@ -37,8 +38,9 @@ const bentoBlocks = computed(() => [
   {
     id: 'core',
     title: t.value?.bento?.core_title || 'Core: Ядро и Данные',
-    desc: t.value?.bento?.core_desc || 'Основа бизнес-систем. Визуальное программирование (Low-Code) и Headless CMS для сверхбыстрой сборки логики и кастомных админ-панелей.',
-    span: 'col-span-1 md:col-span-2 lg:col-span-2', // Занимает 2 колонки
+    // Добавили выгоду: экономия бюджета (не изобретаем велосипед) и удобство для ИХ менеджеров.
+    desc: t.value?.bento?.core_desc || 'Основа бизнес-систем. Используем Low-Code и Headless CMS, чтобы не сжигать ваш бюджет на разработку с нуля. Сверхбыстрая сборка логики и интуитивные админ-панели для ваших менеджеров.',
+    span: 'col-span-1 md:col-span-2 lg:col-span-2',
     gradient: 'from-[#ea4242]/20 to-[#64f]/20',
     techs: [
         { name: 'n8n', slug: 'n8n', color: '#ea4242' },
@@ -48,8 +50,9 @@ const bentoBlocks = computed(() => [
   {
     id: 'data',
     title: t.value?.bento?.data_title || 'Сбор Данных и Автоматизация',
-    desc: t.value?.bento?.data_desc || 'Умные парсеры для обхода блокировок. Вытягиваем контакты с Google Карт, парсим E-commerce площадки, обогащаем базы и автоматизируем холодные email-рассылки.',
-    span: 'col-span-1 md:col-span-2 lg:col-span-3', // Занимает 3 колонки (Широкий)
+    // Оставили твою конкретику (Google Карты, парсинг), но связали это с итоговой целью бизнеса — лидами и продажами.
+    desc: t.value?.bento?.data_desc || 'Умные парсеры для обхода блокировок. Вытягиваем контакты с Google Карт, мониторим цены конкурентов в E-commerce, обогащаем вашу CRM и автоматизируем холодные email-рассылки для генерации лидов.',
+    span: 'col-span-1 md:col-span-2 lg:col-span-3',
     gradient: 'from-[#2EAD33]/20 to-[#4285F4]/20',
     techs: [
         { name: 'Playwright', slug: 'playwright', color: '#2EAD33' },
@@ -61,8 +64,9 @@ const bentoBlocks = computed(() => [
   {
     id: 'devops',
     title: t.value?.bento?.devops_title || 'DevOps',
-    desc: t.value?.bento?.devops_desc || 'Отказоустойчивость серверов.',
-    span: 'col-span-1 md:col-span-1 lg:col-span-1', // Занимает 1 колонку (Узкий, неприметный)
+    // Развернули короткую фразу: отказоустойчивость = бизнес не теряет деньги.
+    desc: t.value?.bento?.devops_desc || 'Отказоустойчивость серверов. Стабильность системы 24/7.',
+    span: 'col-span-1 md:col-span-1 lg:col-span-1',
     gradient: 'from-[#2496ed]/20 to-[#E95420]/20',
     techs: [
         { name: 'Docker', slug: 'docker', color: '#2496ed' },

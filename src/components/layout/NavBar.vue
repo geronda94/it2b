@@ -107,7 +107,7 @@ onUnmounted(() => {
         <span>{{ langStore.lang.toUpperCase() }}</span>
       </button>
 
-      <button 
+      <!-- <button 
         class="nav-btn-icon w-10 justify-center px-0" 
         @click="themeStore.toggleTheme()"
       >
@@ -115,7 +115,7 @@ onUnmounted(() => {
           <font-awesome-icon v-if="themeStore.currentTheme === 'dark'" :icon="['fas', 'sun']" class="text-sm" key="sun" />
           <font-awesome-icon v-else :icon="['fas', 'moon']" class="text-sm" key="moon" />
         </transition>
-      </button>
+      </button> -->
 
       <button 
         class="cta-button hidden md:flex ml-2" 
@@ -127,9 +127,18 @@ onUnmounted(() => {
       
     </div>
 
-    <div class="navbar-end flex lg:hidden w-auto z-50">
+    <div class="navbar-end flex lg:hidden items-center justify-end gap-3 w-auto z-50">
+      
       <button 
-        class="burger-button"
+        class="nav-btn-icon burger__lang px-3" 
+        @click="emit('openModal', 'lang')" 
+      >
+        <font-awesome-icon :icon="['fas', 'globe']" class="text-sm opacity-70 burger__lang-icon" />
+        <span>{{ langStore.lang.toUpperCase() }}</span>
+      </button>
+
+      <button 
+        class="burger-button ml-2"
         :class="{ 'active': isMobileMenuOpen }"
         @click="toggleMobileMenu"
         aria-label="Toggle menu"
@@ -168,13 +177,13 @@ onUnmounted(() => {
                     <span>{{ langStore.lang.toUpperCase() }}</span>
                 </button>
 
-                <button 
+                <!-- <button 
                     class="nav-btn-icon flex-1 h-12 justify-center text-lg bg-[var(--bg-secondary)]" 
                     @click="themeStore.toggleTheme()"
                 >
                     <font-awesome-icon v-if="themeStore.currentTheme === 'dark'" :icon="['fas', 'sun']" />
                     <font-awesome-icon v-else :icon="['fas', 'moon']" />
-                </button>
+                </button> -->
             </div>
 
             <button 
@@ -241,6 +250,15 @@ onUnmounted(() => {
   transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   transform-origin: center;
 }
+
+.burger__lang {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  /* padding: 0; */
+}
+
+.burger__lang-icon { color: var(--text-primary) !important;}
 
 /* Анимация Бургера */
 .burger-button.active span:nth-child(1) {

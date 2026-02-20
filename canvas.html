@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Panther Walking</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111827; /* Темно-синий/серый фон как на картинке */
+            background-image: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="catCanvas" width="800" height="500"></canvas>
+
+<script>
+    const canvas = document.getElementById('catCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let time = 0;
+
+    // Цвета в стиле киберпанк
+    const glowColor = '#00e5ff';
+    const darkBlue = '#1d4ed8';
+
+    function drawNode(x, y, radius = 4) {
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = glowColor;
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    function drawLimb(startX, startY, angle1, len1, angle2, len2, isBackground) {
+        const jointX = startX + Math.cos(angle1) * len1;
+        const jointY = startY + Math.sin(angle1) * len1;
+        const footX = jointX + Math.cos(angle2) * len2;
+        const footY = jointY + Math.sin(angle2) * len2;
+
+        ctx.lineWidth = isBackground ? 4 : 6;
+        ctx.strokeStyle = isBackground ? darkBlue : glowColor;
+        
+        // Свечение только для переднего плана
+        if (!isBackground) {
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = glowColor;
+        } else {
+            ctx.shadowBlur = 0;
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(startX, startY);
+        ctx.lineTo(jointX, jointY);
+        ctx.lineTo(footX, footY);
+        ctx.stroke();
+
+        // Рисуем узлы (в стиле печатной платы)
+        drawNode(startX, startY, isBackground ? 3 : 5);
+        drawNode(jointX, jointY, isBackground ? 3 : 4);
+        drawNode(footX, footY, isBackground ? 2 : 3);
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        time += 0.08; // Скорость ходьбы
+
+        // Базовые координаты (центр тела)
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2 + 50;
+
+        // Анимация подпрыгивания тела при ходьбе
+        const bounce = Math.sin(time * 2) * 5;
+        
+        const chestX = cx + 80;
+        const chestY = cy - 60 + bounce;
+        const pelvisX = cx - 80;
+        const pelvisY = cy - 50 + bounce;
+
+        // Цикл ходьбы (фазы для 4 лап)
+        const phaseFL = time;               // Front Left
+        const phaseFR = time + Math.PI;     // Front Right (противофаза)
+        const phaseBL = time + Math.PI;     // Back Left
+        const phaseBR = time;               // Back Right
+
+        // --- ЗАДНИЙ ПЛАН (Дальние лапы) ---
+        
+        // Дальняя передняя лапа
+        let frShoulder = Math.PI / 2 + Math.sin(phaseFR) * 0.5;
+        let frElbow = frShoulder - 0.5 + Math.cos(phaseFR) * 0.4;
+        drawLimb(chestX, chestY, frShoulder, 60, frElbow, 60, true);
+
+        // Дальняя задняя лапа
+        let blHip = Math.PI / 2 + Math.sin(phaseBL) * 0.5;
+        let blKnee = blHip + 0.5 + Math.cos(phaseBL) * 0.4;
+        drawLimb(pelvisX, pelvisY, blHip, 60, blKnee, 60, true);
+
+        // --- ТЕЛО (Позвоночник) ---
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = glowColor;
+        ctx.strokeStyle = glowColor;
+        ctx.lineWidth = 8;
+        
+        ctx.beginPath();
+        // Изгиб спины
+        ctx.moveTo(pelvisX, pelvisY);
+        ctx.quadraticCurveTo(cx, cy - 90 + bounce, chestX, chestY);
+        ctx.stroke();
+        drawNode(cx, cy - 75 + bounce, 5); // Центральный узел
+
+        // --- ГОЛОВА ---
+        const headX = chestX + 60;
+        const headY = chestY - 40;
+        
+        // Шея
+        ctx.beginPath();
+        ctx.moveTo(chestX, chestY);
+        ctx.lineTo(headX, headY);
+        ctx.stroke();
+        
+        // Контур головы
+        ctx.beginPath();
+        ctx.moveTo(headX, headY);
+        ctx.lineTo(headX + 30, headY - 10); // Нос
+        ctx.lineTo(headX + 25, headY + 15); // Челюсть
+        ctx.lineTo(headX, headY + 10);
+        ctx.closePath();
+        ctx.stroke();
+        
+        // Ухо
+        ctx.beginPath();
+        ctx.moveTo(headX, headY);
+        ctx.lineTo(headX - 10, headY - 25);
+        ctx.lineTo(headX + 10, headY - 10);
+        ctx.stroke();
+
+        drawNode(headX, headY, 5);
+        drawNode(headX + 20, headY - 5, 2); // Глаз
+
+        // --- ХВОСТ ---
+        ctx.beginPath();
+        ctx.moveTo(pelvisX, pelvisY);
+        let tailX = pelvisX;
+        let tailY = pelvisY;
+        for (let i = 1; i <= 5; i++) {
+            let tAngle = Math.PI + 0.5 + Math.sin(time - i * 0.5) * 0.3;
+            let nextX = tailX + Math.cos(tAngle) * 20;
+            let nextY = tailY + Math.sin(tAngle) * 20;
+            ctx.lineTo(nextX, nextY);
+            tailX = nextX;
+            tailY = nextY;
+            if(i % 2 === 0) drawNode(tailX, tailY, 3);
+        }
+        ctx.stroke();
+
+        // --- ПЕРЕДНИЙ ПЛАН (Ближние лапы) ---
+        
+        // Ближняя задняя лапа
+        let brHip = Math.PI / 2 + Math.sin(phaseBR) * 0.5;
+        let brKnee = brHip + 0.5 + Math.cos(phaseBR) * 0.4;
+        drawLimb(pelvisX, pelvisY, brHip, 65, brKnee, 65, false);
+
+        // Ближняя передняя лапа
+        let flShoulder = Math.PI / 2 + Math.sin(phaseFL) * 0.5;
+        let flElbow = flShoulder - 0.5 + Math.cos(phaseFL) * 0.4;
+        drawLimb(chestX, chestY, flShoulder, 65, flElbow, 65, false);
+
+        // Анимационный цикл
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
+
+</body>
+</html>
