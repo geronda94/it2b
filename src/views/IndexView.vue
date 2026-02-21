@@ -19,9 +19,9 @@ const emit = defineEmits(['openModal'])
     <Hero @openModal="emit('openModal', 'contact')" />
     <TechMarquee/>
     <BusinessSolutions />
-    <TechBento />
     <ProcessTimeline />
     <CasesMetrics />
+    <TechBento />
     <CallBlock />
   </div>
 </template>

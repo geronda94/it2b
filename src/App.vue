@@ -7,6 +7,7 @@ import { useLangStore } from './stores/configs/lang'
 // Layou
 import MainLayout from './components/layout/MainLayout.vue'
 import BaseModal from './components/UI/BaseModal.vue'
+import MoneyWidget from './components/UI/MoneyWidget.vue'
 // Modals Content
 import ContactModal from './components/modals/ContactModal.vue'
 import LangModal from './components/modals/LangModal.vue'
@@ -47,6 +48,7 @@ const modalTitle = computed(() => {
 <template>
   <MainLayout @openModal="openModal">
     <RouterView @openModal="openModal" />
+    <MoneyWidget />
   </MainLayout>
 
   <BaseModal 

@@ -19,16 +19,21 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faSun, faMoon, faXmark, faNetworkWired, faDatabase, faLaptopCode, faGlobe, faArrowRight, faCheck,
   faBars, faWind, faServer, faRobot, faMagnifyingGlassChart, faBullseye,  faTableColumns,
-  faMicrochip
+  faMicrochip,
+  faTimes,
+  faDollarSign,
+  faCheckCircle,
+  faUser
 } from '@fortawesome/free-solid-svg-icons'
 // Импортируем бренды (Brands)
 import { faGithub, faTelegram, faVuejs, faDocker, faNodeJs } from '@fortawesome/free-brands-svg-icons'
 // Добавляем их в библиотеку
 library.add(
-  faSun, faMoon, faXmark, 
+  faSun, faMoon, faXmark,
   faNetworkWired, faDatabase, faLaptopCode,
   faGithub, faGlobe, faArrowRight, faTelegram, faCheck, faBars, faWind, faServer,
-  faVuejs, faDocker, faNodeJs, faRobot, faMagnifyingGlassChart, faBullseye, faTableColumns, faMicrochip
+  faVuejs, faDocker, faNodeJs, faRobot, faMagnifyingGlassChart, faBullseye, faTableColumns, faMicrochip,
+  faTimes, faDollarSign, faCheckCircle, faUser
 )
 
 

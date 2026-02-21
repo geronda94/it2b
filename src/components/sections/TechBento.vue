@@ -6,9 +6,9 @@ const t = inject('t')
 const bentoBlocks = computed(() => [
   {
     id: 'frontend',
-    title: t.value?.bento?.front_title || 'Фронтенд: Лендинги, Платформы и SPA',
-    // Оставили "Убийцу WordPress", но добавили причину: клиенты не уходят из-за загрузки.
-    desc: t.value?.bento?.front_desc || 'Высококонверсионные лендинги, корпоративные сайты и сложные SPA. Убийца медленного WordPress: ваши клиенты больше не закрывают сайт из-за долгой загрузки. Премиальный дизайн и мгновенный отклик на любых устройствах для роста ваших продаж.',
+    title: t.value?.bento?.front_title || 'Сайты, которые не тормозят',
+    // Посыл: WordPress — это медленно и дешево, мы — это быстро и надежно.
+    desc: t.value?.bento?.front_desc || 'Ваши клиенты больше не закроют вкладку, не дождавшись загрузки. Мы создаем сайты, которые открываются мгновенно даже при слабом интернете. Это современный стандарт: никакой медлительности старых систем, только комфорт для ваших покупателей.',
     span: 'col-span-1 md:col-span-2 lg:col-span-4',
     gradient: 'from-[#42b883]/20 via-[#38bdf8]/10 to-[#FFE16B]/20',
     techs: [
@@ -20,26 +20,24 @@ const bentoBlocks = computed(() => [
   },
   {
     id: 'backend',
-    title: t.value?.bento?.backend_title || 'Бэкенд и Боты',
-    // Сместили фокус с просто "работы с БД" на то, что система выдержит нагрузку и не потеряет данные.
-    desc: t.value?.bento?.backend_desc || 'Асинхронный Python для API, Telegram-ботов и микросервисов. Ваша система не "ляжет" при наплыве трафика, а данные клиентов будут надежно сохранены и защищены строгой валидацией.',
+    title: t.value?.bento?.backend_title || 'Умная автоматизация под ключ',
+    // Посыл: Мы сделаем любую хотелку, которую не тянет обычная CRM.
+    desc: t.value?.bento?.backend_desc || 'Разрабатываем надежную внутреннюю систему специально под ваши правила. В отличие от готовых сервисов, здесь нет ограничений: мы реализуем любую вашу идею, сохранив данные под строгой защитой.',
     span: 'col-span-1 md:col-span-2 lg:col-span-2',
     gradient: 'from-[#3776AB]/20 to-[#009688]/20', 
     techs: [
         { name: 'Python', slug: 'python', color: '#3776AB' },
         { name: 'FastAPI', slug: 'fastapi', color: '#009688' },
         { name: 'aiogram 3', slug: 'telegram', color: '#26A5E4' },
-        { name: 'n8n', slug: 'n8n', color: '#ea4242' },
         { name: 'PostgreSQL', slug: 'postgresql', color: '#336791' },
-        { name: 'SQLAlchemy', slug: 'sqlalchemy', color: '#D71F00' },
         { name: 'Pydantic', slug: 'pydantic', color: '#E92063' }
     ]
   },
   {
     id: 'core',
-    title: t.value?.bento?.core_title || 'Core: Ядро и Данные',
-    // Добавили выгоду: экономия бюджета (не изобретаем велосипед) и удобство для ИХ менеджеров.
-    desc: t.value?.bento?.core_desc || 'Основа бизнес-систем. Используем Low-Code и Headless CMS, чтобы не сжигать ваш бюджет на разработку с нуля. Сверхбыстрая сборка логики и интуитивные админ-панели для ваших менеджеров.',
+    title: t.value?.bento?.core_title || 'Быстрая сборка без переплат',
+    // Посыл: Мы экономим ваши деньги, используя "умные конструкторы" там, где это можно.
+    desc: t.value?.bento?.core_desc || 'Мы не изобретаем велосипед и не тратим ваше время впустую. Используем современные инструменты, которые позволяют собрать 80% проекта за считанные дни, экономя ваш бюджет без потери качества.',
     span: 'col-span-1 md:col-span-2 lg:col-span-2',
     gradient: 'from-[#ea4242]/20 to-[#64f]/20',
     techs: [
@@ -49,13 +47,13 @@ const bentoBlocks = computed(() => [
   },
   {
     id: 'data',
-    title: t.value?.bento?.data_title || 'Сбор Данных и Автоматизация',
-    // Оставили твою конкретику (Google Карты, парсинг), но связали это с итоговой целью бизнеса — лидами и продажами.
-    desc: t.value?.bento?.data_desc || 'Умные парсеры для обхода блокировок. Вытягиваем контакты с Google Карт, мониторим цены конкурентов в E-commerce, обогащаем вашу CRM и автоматизируем холодные email-рассылки для генерации лидов.',
+    title: t.value?.bento?.data_title || 'Поиск клиентов и парсинг',
+    // Посыл: Мы достанем любые контакты и автоматизируем рассылки.
+    desc: t.value?.bento?.data_desc || 'Ваш отдел продаж больше не ищет контакты вручную. Наша система сама собирает базы клиентов из карт и справочников, прогревает их рассылками и передает вам уже "горячие" заявки.',
     span: 'col-span-1 md:col-span-2 lg:col-span-3',
     gradient: 'from-[#2EAD33]/20 to-[#4285F4]/20',
     techs: [
-        { name: 'Playwright', slug: 'playwright', color: '#2EAD33' },
+        { name: 'Playwright', slug: 'googlechrome', color: '#2EAD33' },
         { name: 'Google Maps', slug: 'googlemaps', color: '#4285F4' },
         { name: 'Email Рассылки', slug: 'gmail', color: '#EA4335' },
         { name: 'E-commerce', slug: 'shopify', color: '#95BF47' }
@@ -63,9 +61,7 @@ const bentoBlocks = computed(() => [
   },
   {
     id: 'devops',
-    title: t.value?.bento?.devops_title || 'DevOps',
-    // Развернули короткую фразу: отказоустойчивость = бизнес не теряет деньги.
-    desc: t.value?.bento?.devops_desc || 'Отказоустойчивость серверов. Стабильность системы 24/7.',
+    title: t.value?.bento?.devops_title || 'Работа 24/7',
     span: 'col-span-1 md:col-span-1 lg:col-span-1',
     gradient: 'from-[#2496ed]/20 to-[#E95420]/20',
     techs: [
@@ -85,10 +81,10 @@ const bentoBlocks = computed(() => [
       <div class="max-w-3xl mx-auto text-center mb-16">
         <h2 class="text-[var(--brand-primary)] text-sm font-bold uppercase tracking-[0.2em] mb-4">Технологический Стек</h2>
         <h3 class="text-3xl md:text-5xl font-black text-white font-[Eurostile,sans-serif] tracking-wide mb-6">
-          Инструменты нового <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">Поколения</span>
+          Современные <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">Инструменты</span>
         </h3>
         <p class="text-[var(--text-secondary)] text-lg leading-relaxed">
-          Используем только современные и масштабируемые технологии. Никакого устаревшего легаси — только скорость и надежность.
+          Используем технологии, которые обеспечивают вашему бизнесу скорость и надежность без переплат за устаревшие решения.
         </p>
       </div>
 

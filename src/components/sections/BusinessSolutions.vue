@@ -8,45 +8,45 @@ const solutions = computed(() => [
     id: 'ai-agents',
     icon: ['fas', 'robot'],
     color: '#06b6d4',
-    title: t.value?.solutions?.ai_title || 'ИИ-Сотрудники и Ассистенты',
-    desc: t.value?.solutions?.ai_desc || 'Внедряем умных агентов, которые работают 24/7. Автоматизируем скрининг кандидатов, запись клиентов и рутину в любой нише: от клиник до недвижимости.'
+    title: t.value?.solutions?.ai_title || 'ИИ-сотрудники 24/7',
+    desc: t.value?.solutions?.ai_desc || 'Ваш менеджер, который никогда не спит. Записывает клиентов, отвечает на вопросы в WhatsApp и квалифицирует лидов, пока вы отдыхаете'
   },
   {
     id: 'b2b-machine',
     icon: ['fas', 'bullseye'],
     color: '#3b82f6',
-    title: t.value?.solutions?.b2b_title || 'Машина B2B-Продаж под ключ',
-    desc: t.value?.solutions?.b2b_desc || 'Автоматически собираем контакты вашей ЦА (парсинг карт, сайтов, поисковиков), обогащаем данные и прогреваем лидов персонализированными ИИ-офферами.'
+    title: t.value?.solutions?.b2b_title || 'Маркетинг на Автопилоте',
+    desc: t.value?.solutions?.b2b_desc || 'Забудьте о холодном поиске вручную. Система сама соберет базу вашей ЦА и отправит им персонализированные предложения через Email, WhatsApp или Telegram'
   },
   {
     id: 'data-mining',
     icon: ['fas', 'magnifying-glass-chart'],
     color: '#8b5cf6',
-    title: t.value?.solutions?.data_title || 'Data Mining и Аналитика',
-    desc: t.value?.solutions?.data_desc || 'Настраиваем умные парсеры для непрерывного сбора данных. Отслеживайте цены конкурентов, агрегируйте информацию и принимайте решения на основе реальных цифр.'
+    title: t.value?.solutions?.data_title || 'Мониторинг конкурентов',
+    desc: t.value?.solutions?.data_desc || 'Узнавайте об изменении цен и ассортимента конкурентов в реальном времени. Принимайте решения на основе цифр, а не интуиции'
   },
   {
     id: 'web-platforms',
     icon: ['fas', 'laptop-code'],
     color: '#10b981',
-    title: t.value?.solutions?.web_title || 'Премиальные Web-платформы',
+    title: t.value?.solutions?.web_title || 'Сверхбыстрые сайты',
     // Слегка докрутили: сместили акцент с Vue.js на удержание клиентов
-    desc: t.value?.solutions?.web_desc || 'Создаем интерфейсы, которые работают на конверсию. Ускоряем загрузку в разы, чтобы вы не теряли клиентов, и разрабатываем премиальные корпоративные порталы и e-commerce.'
+    desc: t.value?.solutions?.web_desc || 'Сайты, которые открываются мгновенно. Ваши клиенты больше не уйдут к конкурентам из-за долгой загрузки страницы'
   },
   {
     id: 'custom-erp',
     icon: ['fas', 'table-columns'],
     color: '#f59e0b',
-    title: t.value?.solutions?.erp_title || 'Кастомные ERP и Админки',
-    desc: t.value?.solutions?.erp_desc || 'Проектируем архитектуру данных и удобные панели управления под ваши уникальные процессы. Ваш личный бэкенд без ограничений коробочных CRM.'
+    title: t.value?.solutions?.erp_title || 'Управляйте процессами эффективно',
+    desc: t.value?.solutions?.erp_desc || 'Свяжем ваш склад, сайт и отдел продаж. Больше никакой путаницы в Excel — вся аналитика бизнеса перед вашими глазами'
   },
   {
     id: 'high-load',
     icon: ['fas', 'microchip'],
     color: '#ef4444',
-    title: t.value?.solutions?.api_title || 'Высоконагруженные Системы',
+    title: t.value?.solutions?.api_title || 'Ваш сайт не ляжет в пик продаж',
     // Докрутили: "не упадет в сезон" — это то, чего реально боится бизнес
-    desc: t.value?.solutions?.api_desc || 'Разрабатываем отказоустойчивые API и серверную логику. Ваша система выдержит любой наплыв пользователей и не "ляжет" в сезон распродаж или при резком масштабировании.'
+    desc: t.value?.solutions?.api_desc || 'Проектируем архитектуру, которая выдержит тысячи заказов одновременно. Гарантируем стабильную работу в сезон распродаж или при резком росте трафика'
   }
 ])
 </script>
@@ -61,10 +61,10 @@ const solutions = computed(() => [
       <div class="max-w-3xl mx-auto text-center mb-16 md:mb-24">
         <h2 class="text-[var(--brand-primary)] text-sm font-bold uppercase tracking-[0.2em] mb-4">Наши Решения</h2>
         <h3 class="text-3xl md:text-5xl font-black text-white font-[Eurostile,sans-serif] tracking-wide mb-6">
-          Превращаем Хаос в <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">Систему</span>
+          От хаоса <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">к системе</span>
         </h3>
         <p class="text-[var(--text-secondary)] text-lg leading-relaxed">
-          Мы не просто пишем код. Мы закрываем уязвимости вашего бизнеса, сокращаем издержки и создаем автоматизированные конвейеры, приносящие прибыль.
+          Оптимизируем ваши бизнес-процессы: убираем рутину и создаем автоматизированные конвейеры, которые экономят бюджет и приносят прибыль.
         </p>
       </div>
 
