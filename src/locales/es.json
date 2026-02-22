@@ -130,16 +130,25 @@
     "data_desc": "Su equipo de ventas ya no busca contactos a mano. El sistema los recolecta, los calienta y le entrega solicitudes 'calientes'.",
     "devops_title": "Operaciones 24/7"
   },
-  "cta": {
+"cta": {
     "badge": "Auditoría Gratuita",
     "title": "¿Listo para automatizar su negocio?",
-    "desc": "Deje su solicitud y discutiremos su proyecto. Analizaremos sus procesos y propondremos una arquitectura que ahorre tiempo и dinero.",
+    "desc": "Deje su solicitud y discutiremos su proyecto. Analizaremos sus procesos y propondremos una arquitectura que ahorre tiempo y dinero.",
     "check_1": "Respuesta en 15 min.",
     "check_2": "NDA desde el primer día",
     "name_placeholder": "Su Nombre",
-    "tg_placeholder": "@usuario o teléfono",
+    "contact_placeholder": "Su teléfono o Email",
+    "service_placeholder": "¿Qué servicio le interesa?",
+    "service_1": "Crear sitio web",
+    "service_2": "Modificar sitio web",
+    "service_3": "Automatización de procesos de negocio",
+    "service_4": "Automatización empresarial integral",
+    "service_5": "Extracción de datos (Scraping)",
+    "service_6": "Automatización de ventas",
+    "service_7": "Varios servicios / Otro",
     "btn": "Start Project",
     "btn_submitting": "Enviando...",
+    "btn_error": "Error de red",
     "btn_success": "¡Solicitud Recibida!",
     "privacy_text": "Al hacer clic, acepta nuestra",
     "privacy_link": "política de privacidad"

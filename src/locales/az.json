@@ -130,18 +130,27 @@
     "data_desc": "Satış şöbəsi artıq kontaktları əllə axtarmır. Sistem bazaları toplayır, isidir və sizə artıq 'isti' müraciətlər kimi təhvil verir.",
     "devops_title": "24/7 Fəaliyyət"
   },
-  "cta": {
+"cta": {
     "badge": "Pulsuz Audit",
     "title": "Avtomatlaşdırmaya hazırsınız?",
     "desc": "Müraciət qoyun, layihənizi müzakirə edək. Prosesləri təhlil edib sizə vaxt və pul qazandıracaq arxitektura təklif edək.",
     "check_1": "15 dəqiqəyə cavab",
-    "check_2": "İlk gündən NDA müqaviləsi",
+    "check_2": "İlk gündən NDA",
     "name_placeholder": "Adınız",
-    "tg_placeholder": "@username və ya telefon",
+    "contact_placeholder": "Telefonunuz və ya Email",
+    "service_placeholder": "Hansı xidmət sizi maraqlandırır?",
+    "service_1": "Sayt yaratmaq",
+    "service_2": "Saytı təkmilləşdirmək",
+    "service_3": "Biznes proseslərinin avtomatlaşdırılması",
+    "service_4": "Tam biznes avtomatlaşdırılması",
+    "service_5": "Məlumatların toplanması (Scraping)",
+    "service_6": "Satış şöbəsinin avtomatlaşdırılması",
+    "service_7": "Bir neçə xidmət / Digər",
     "btn": "Start Project",
     "btn_submitting": "Göndərilir...",
+    "btn_error": "Şəbəkə xətası",
     "btn_success": "Müraciət qəbul edildi!",
-    "privacy_text": "Düyməyə basaraq siz",
-    "privacy_link": "məxfilik siyasəti ilə razılaşırsınız"
+    "privacy_text": "Düyməyə basaraq siz razılaşırsınız:",
+    "privacy_link": "məxfilik siyasəti ilə"
   }
 }

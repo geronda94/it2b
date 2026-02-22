@@ -130,16 +130,25 @@
     "data_desc": "Echipa de vânzări nu mai caută contacte manual. Sistemul colectează baze de date, le încălzește prin mesaje și îți livrează cereri gata de lucru.",
     "devops_title": "Funcționare 24/7"
   },
-  "cta": {
+"cta": {
     "badge": "Audit Gratuit",
     "title": "Gata pentru automatizare?",
     "desc": "Lasă o cerere și vom discuta proiectul tău. Analizăm procesele actuale și propunem o arhitectură care economisește timp și bani.",
     "check_1": "Răspuns în 15 min",
     "check_2": "NDA din prima zi",
     "name_placeholder": "Numele tău",
-    "tg_placeholder": "@username sau telefon",
+    "contact_placeholder": "Telefonul sau Email-ul tău",
+    "service_placeholder": "Ce serviciu te interesează?",
+    "service_1": "Creare site web",
+    "service_2": "Modificare site web",
+    "service_3": "Automatizarea proceselor de afaceri",
+    "service_4": "Automatizare completă a afacerii",
+    "service_5": "Colectare de date (Scraping)",
+    "service_6": "Automatizarea departamentului de vânzări",
+    "service_7": "Mai multe servicii / Altele",
     "btn": "Start Project",
     "btn_submitting": "Se trimite...",
+    "btn_error": "Eroare de rețea",
     "btn_success": "Cerere recepționată!",
     "privacy_text": "Prin apăsarea butonului, ești de acord cu",
     "privacy_link": "politica de confidențialitate"

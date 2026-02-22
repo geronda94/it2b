@@ -130,16 +130,25 @@
     "data_desc": "Your sales team stops searching. Our system mines leads from directories, warms them up, and hands over hot inquiries.",
     "devops_title": "24/7 Operations"
   },
-  "cta": {
+"cta": {
     "badge": "Free Audit",
     "title": "Ready to automate?",
     "desc": "Let's discuss your project. We'll analyze your processes, find growth points, and suggest an architecture that saves time and money.",
     "check_1": "Response in 15 mins",
     "check_2": "NDA from day one",
     "name_placeholder": "Your Name",
-    "tg_placeholder": "@username or phone",
+    "contact_placeholder": "Your phone or Email",
+    "service_placeholder": "What service are you interested in?",
+    "service_1": "Build a website",
+    "service_2": "Modify a website",
+    "service_3": "Business process automation",
+    "service_4": "Full business automation",
+    "service_5": "Data scraping",
+    "service_6": "Sales automation",
+    "service_7": "Multiple services / Other",
     "btn": "Start Project",
     "btn_submitting": "Sending...",
+    "btn_error": "Network error",
     "btn_success": "Request Received!",
     "privacy_text": "By clicking, you agree to our",
     "privacy_link": "privacy policy"

@@ -130,16 +130,25 @@
     "data_desc": "Ihr Vertrieb sucht nicht mehr manuell. Unser System sammelt Leads, wärmt sie auf und übergibt Ihnen 'heiße' Anfragen.",
     "devops_title": "24/7 Betrieb"
   },
-  "cta": {
+"cta": {
     "badge": "Kostenloses Audit",
     "title": "Bereit für Automatisierung?",
     "desc": "Lassen Sie uns Ihr Projekt besprechen. Wir analysieren Ihre Prozesse und schlagen eine Architektur vor, die Zeit und Geld spart.",
     "check_1": "Antwort in 15 Min.",
     "check_2": "NDA ab dem ersten Tag",
     "name_placeholder": "Ihr Name",
-    "tg_placeholder": "@username oder Telefon",
+    "contact_placeholder": "Ihre Telefonnummer oder E-Mail",
+    "service_placeholder": "Welcher Service interessiert Sie?",
+    "service_1": "Website erstellen",
+    "service_2": "Website anpassen",
+    "service_3": "Geschäftsprozessautomatisierung",
+    "service_4": "Umfassende Business-Automatisierung",
+    "service_5": "Datenerfassung (Scraping)",
+    "service_6": "Vertriebsautomatisierung",
+    "service_7": "Mehrere Services / Sonstiges",
     "btn": "Start Project",
     "btn_submitting": "Wird gesendet...",
+    "btn_error": "Netzwerkfehler",
     "btn_success": "Anfrage erhalten!",
     "privacy_text": "Mit Klick auf den Button stimmen Sie unserer",
     "privacy_link": "Datenschutzerklärung zu"

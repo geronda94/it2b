@@ -130,18 +130,27 @@
     "data_desc": "Satış ekibiniz artık manuel rehber taramaz. Sistem verileri toplar, ısıtır ve size 'sıcak' talepler olarak iletir.",
     "devops_title": "7/24 Çalışma"
   },
-  "cta": {
+"cta": {
     "badge": "Ücretsiz Denetim",
     "title": "İşinizi otomatikleştirmeye hazır mısınız?",
     "desc": "Başvurunuzu bırakın, projenizi konuşalım. Süreçlerinizi analiz edelim ve size zaman kazandıracak mimariyi önerelim.",
     "check_1": "15 dakikada yanıt",
-    "check_2": "İlk günden itibaren Gizlilik Sözleşmesi (NDA)",
+    "check_2": "İlk günden itibaren NDA",
     "name_placeholder": "Adınız",
-    "tg_placeholder": "@kullanıcıadı veya telefon",
+    "contact_placeholder": "Telefon numaranız veya E-posta",
+    "service_placeholder": "Hangi hizmetle ilgileniyorsunuz?",
+    "service_1": "Web sitesi oluşturma",
+    "service_2": "Web sitesini geliştirme",
+    "service_3": "İş süreçleri otomasyonu",
+    "service_4": "Kapsamlı iş otomasyonu",
+    "service_5": "Veri toplama (Scraping)",
+    "service_6": "Satış departmanı otomasyonu",
+    "service_7": "Birden fazla hizmet / Diğer",
     "btn": "Start Project",
     "btn_submitting": "Gönderiliyor...",
+    "btn_error": "Ağ hatası",
     "btn_success": "Başvuru Alındı!",
-    "privacy_text": "Butona basarak",
-    "privacy_link": "gizlilik politikasını kabul etmiş olursunuz"
+    "privacy_text": "Butona tıklayarak kabul etmiş olursunuz",
+    "privacy_link": "gizlilik politikamızı"
   }
 }

@@ -5,7 +5,8 @@ import { useLangStore } from '@/stores/configs/lang'
 const langStore = useLangStore()
 const t = inject('t')
 
-const emit = defineEmits(['openContact', 'openModal'])
+// Убрали openContact из эмитеров
+const emit = defineEmits(['openModal'])
 
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
@@ -21,7 +22,7 @@ const getT = (key, fallback) => {
   return val === key ? fallback : val
 }
 
-// Структура меню с локалями
+// Структура меню (убрали кнопку Start Project отсюда)
 const menuItems = computed(() => [
   { 
     name: getT('nav.solutions', 'Solutions'), 
@@ -42,11 +43,6 @@ const menuItems = computed(() => [
     name: getT('nav.stack', 'Stack'), 
     type: 'anchor', 
     path: '#stack' 
-  },
-  { 
-    name: getT('nav.btn_start', 'Strart Project'), 
-    type: 'anchor', 
-    path: '#callBlock' 
   }
 ])
 
@@ -113,10 +109,10 @@ onUnmounted(() => {
         <span>{{ langStore.lang.toUpperCase() }}</span>
       </button>
 
-      <button class="cta-button hidden md:flex ml-2" @click="emit('openContact')">
+      <a href="#callBlock" class="cta-button hidden md:flex ml-2">
         <span>{{ getT('nav.btn_start', 'Start Project') }}</span>
         <font-awesome-icon :icon="['fas', 'arrow-right']" class="text-xs opacity-70" />
-      </button>
+      </a>
     </div>
 
     <div class="navbar-end flex lg:hidden items-center justify-end gap-3 w-auto z-50">
@@ -131,7 +127,8 @@ onUnmounted(() => {
     </div>
 
     <transition name="mobile-fade">
-      <div v-if="isMobileMenuOpen" class="fixed inset-0 z-40 bg-[var(--bg-primary)] pt-24 px-6 flex flex-col h-screen overflow-y-auto">
+      <div v-if="isMobileMenuOpen" class="fixed inset-0 z-40 bg-[color-mix(in_srgb,var(--bg-primary),transparent_10%)] backdrop-blur-md pt-24 px-6 flex flex-col h-[100dvh] overflow-y-auto">
+        
         <ul class="flex flex-col gap-6 text-2xl font-bold text-[var(--text-primary)] mb-auto">
           <li v-for="(item, index) in menuItems" :key="index">
             <component 
@@ -147,19 +144,21 @@ onUnmounted(() => {
           </li>
         </ul>
 
-        <div class="pb-10 flex flex-col gap-4">
+        <div class="pb-6 flex flex-col gap-4">
             <button class="nav-btn-icon h-12 justify-center text-lg bg-[var(--bg-secondary)]" @click="emit('openModal', 'lang'); handleLinkClick()">
                 <font-awesome-icon :icon="['fas', 'globe']" />
                 <span>{{ langStore.lang.toUpperCase() }}</span>
             </button>
-            <button class="cta-button w-full h-14 justify-center text-lg" @click="emit('openContact'); handleLinkClick()">
+            
+            <a href="#callBlock" class="cta-button w-full h-14 justify-center text-lg flex" @click="handleLinkClick">
                 <span>{{ getT('nav.btn_start', 'Start Project') }}</span>
-            </button>
+            </a>
         </div>
       </div>
     </transition>
   </nav>
 </template>
+
 <style scoped>
 .navbar {
     min-height: auto;
@@ -167,24 +166,19 @@ onUnmounted(() => {
 
 /* --- СТИЛИ ДЛЯ КНОПОК --- */
 .nav-btn-icon {
-  /* Убрали bg внутри apply */
   @apply flex items-center gap-2 px-4 h-10 min-h-0 rounded-lg border border-[var(--border-color)] text-[var(--text-secondary)] text-xs font-bold transition-all duration-200;
-  
-  /* Исправленный фон */
   background-color: color-mix(in srgb, var(--bg-secondary), transparent 50%);
 }
 
 .nav-btn-icon:hover {
   @apply border-[var(--brand-primary)] text-[var(--text-primary)] shadow-[0_0_15px_-5px_var(--brand-glow)];
-  
-  /* Исправленный фон при наведении */
   background-color: var(--brand-primary);
   background: color-mix(in srgb, var(--brand-primary), transparent 90%);
 }
 
 /* CTA Кнопка (Start Project) */
 .cta-button {
-  @apply flex items-center justify-center gap-2 px-6 h-10 min-h-0 rounded-lg text-sm font-bold text-white border-0 bg-gradient-to-r from-[var(--brand-secondary)] to-[var(--brand-primary)] shadow-[0_0_15px_-3px_var(--brand-glow)] hover:shadow-[0_0_25px_-5px_var(--brand-primary)] hover:scale-105 active:scale-95 transition-all duration-200;
+  @apply flex items-center justify-center gap-2 px-6 h-10 min-h-0 rounded-lg text-sm font-bold text-white border-0 bg-gradient-to-r from-[var(--brand-secondary)] to-[var(--brand-primary)] shadow-[0_0_15px_-3px_var(--brand-glow)] hover:shadow-[0_0_25px_-5px_var(--brand-primary)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer;
 }
 
 /* --- CSS БУРГЕР --- */
@@ -205,7 +199,6 @@ onUnmounted(() => {
 .burger-button span {
   width: 100%;
   height: 2px;
-  /* Цвет адаптируется под тему */
   background-color: var(--text-primary);
   border-radius: 10px;
   transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -216,7 +209,6 @@ onUnmounted(() => {
   background-color: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-primary);
-  /* padding: 0; */
 }
 
 .burger__lang-icon { color: var(--text-primary) !important;}

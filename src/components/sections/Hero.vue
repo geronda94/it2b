@@ -2,7 +2,17 @@
 import { inject, ref, onMounted, onBeforeUnmount } from 'vue'
 
 const t = inject('t')
-const emit = defineEmits(['openModal'])
+
+// Наш хелпер для Proxy-стора
+const getT = (key, fallback) => {
+  const keys = key.split('.')
+  let val = t.value
+  for (const k of keys) {
+    if (!val) break
+    val = val[k]
+  }
+  return val === key ? fallback : val
+}
 
 // --- Логика Canvas ---
 const canvasRef = ref(null)
@@ -28,11 +38,8 @@ class Particle {
     this.vx = this.baseVx
     this.vy = this.baseVy
     
-    // Новая логика: только 40% частиц реагируют на курсор
     this.isInteractive = Math.random() < 0.4 
     
-    // Смещение цели (чтобы они не слипались в одну точку, а роились вокруг курсора)
-    // Разброс от -150 до +150 пикселей от центра мыши
     this.offsetX = (Math.random() - 0.5) * 300
     this.offsetY = (Math.random() - 0.5) * 300
     
@@ -44,29 +51,23 @@ class Particle {
   update() {
     let interacting = false;
 
-    // 1. Притяжение (только для интерактивных частиц)
     if (this.isInteractive && mouse.isActive) {
-      // Расстояние до самого курсора
       const dxCenter = mouse.x - this.x
       const dyCenter = mouse.y - this.y
       const distToMouse = Math.sqrt(dxCenter * dxCenter + dyCenter * dyCenter)
       
-      // Реагируют только те, кто в радиусе 350px от мыши
       if (distToMouse < 350) {
         interacting = true;
         
-        // Цель — это курсор ПЛЮС личное смещение частицы
         const targetX = mouse.x + this.offsetX
         const targetY = mouse.y + this.offsetY
         
         const dx = targetX - this.x
         const dy = targetY - this.y
         
-        // Мягкая "пружинная" физика вместо агрессивного ускорения
         this.vx += dx * 0.003
         this.vy += dy * 0.003
         
-        // Ограничиваем максимальную скорость, чтобы они не носились хаотично
         const maxSpeed = 2.5;
         const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy)
         if (speed > maxSpeed) {
@@ -76,27 +77,22 @@ class Particle {
       }
     }
 
-    // 2. Инерция и возврат к норме, если мышь далеко или частица неинтерактивна
     if (!interacting) {
-      this.vx *= 0.95 // Плавное торможение
+      this.vx *= 0.95 
       this.vy *= 0.95
       
-      // Возвращаем базовый медленный дрейф
       if (Math.abs(this.vx) < Math.abs(this.baseVx)) this.vx += (this.baseVx - this.vx) * 0.05
       if (Math.abs(this.vy) < Math.abs(this.baseVy)) this.vy += (this.baseVy - this.vy) * 0.05
     }
 
-    // 3. Движение
     this.x += this.vx
     this.y += this.vy
 
-    // 4. Бесконечный экран (с плавным переносом за границы)
     if (this.x < -50) this.x = this.w + 50
     if (this.x > this.w + 50) this.x = -50
     if (this.y < -50) this.y = this.h + 50
     if (this.y > this.h + 50) this.y = -50
 
-    // 5. Мерцание
     this.angle += this.twinkleSpeed
   }
 
@@ -170,6 +166,7 @@ onBeforeUnmount(() => {
   if (canvasRef.value && canvasRef.value._cleanupResize) canvasRef.value._cleanupResize()
 })
 </script>
+
 <template>
   <header 
     class="relative pt-32 pb-20 lg:pt-48 lg:pb-40 z-10 overflow-hidden"
@@ -193,27 +190,27 @@ onBeforeUnmount(() => {
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--brand-primary)] opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-[var(--brand-primary)]"></span>
             </span>
-            {{ t?.hero?.badge || 'IT to Business' }}
+            {{ getT('hero.badge', 'IT to Business') }}
           </div>
           
           <h1 class="text-4xl md:text-6xl font-black text-[var(--text-primary)] mb-6 leading-tight tracking-tight animate-fade-in-up delay-100">
-            {{ t?.hero?.title_start || 'Ускоряем бизнес' }} <br/> 
+            {{ getT('hero.title_start', 'Ускоряем бизнес') }} <br/> 
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] via-[var(--brand-secondary)] to-purple-500 animate-gradient-x">
-              {{ t?.hero?.title_end || 'Силой Технологий' }}
+              {{ getT('hero.title_end', 'Силой Технологий') }}
             </span>
           </h1>
           
           <p class="text-lg text-[var(--text-secondary)] mb-10 leading-relaxed animate-fade-in-up delay-200 max-w-xl mx-auto lg:mx-0">
-            {{ t?.hero?.desc || 'Мы создаем быстрые, безопасные и масштабируемые решения, превращая сложные процессы в простую автоматику.' }}
+            {{ getT('hero.desc', 'Мы создаем быстрые, безопасные и масштабируемые решения, превращая сложные процессы в простую автоматику.') }}
           </p>
           
           <div class="flex flex-wrap gap-4 justify-center lg:justify-start animate-fade-in-up delay-300">
-            <button class="btn btn-lg border-0 bg-white text-black hover:bg-cyan-50 text-base font-bold px-8 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform" @click="emit('openModal')">
-              {{ t?.hero?.btn_discuss || 'Обсудить задачу' }}
-            </button>
-            <button class="btn btn-lg btn-outline border-[var(--text-secondary)] text-[var(--text-secondary)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/10">
-              {{ t?.hero?.btn_cases || 'Наши кейсы' }}
-            </button>
+            <a href="#callBlock" class="btn btn-lg border-0 bg-white text-black hover:bg-cyan-50 text-base font-bold px-8 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform flex items-center justify-center">
+              {{ getT('hero.btn_discuss', 'Обсудить задачу') }}
+            </a>
+            <a href="#cases" class="btn btn-lg btn-outline border-[var(--text-secondary)] text-[var(--text-secondary)] hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/10 flex items-center justify-center">
+              {{ getT('hero.btn_cases', 'Наши кейсы') }}
+            </a>
           </div>
         </div>
 
@@ -229,8 +226,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-/* Оставил только анимацию для размытого фонового пятна за логотипом, 
-   всю CSS-анимацию самого логотипа удалил, как ты и просил */
 .animate-pulse-slow {
   animation: pulse-bg 8s ease-in-out infinite;
 }
