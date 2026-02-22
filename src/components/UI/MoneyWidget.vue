@@ -75,38 +75,34 @@ const resizeCanvas = () => {
   canvasRef.value.height = window.innerHeight
 }
 
-// 3. Создание частицы (с умной траекторией для мобилок)
+// 3. Создание частицы
 const spawnCoin = () => {
   if (!coinRef.value || document.hidden) return
   const rect = coinRef.value.getBoundingClientRect()
   
   const isMobile = window.innerWidth < 640
   
-  // Расчет горизонтальной скорости (vx)
   let vx
   if (isMobile) {
-    // На мобилках смещаем вектор влево.
-    // Диапазон от -3 (сильно влево) до +0.5 (чуть-чуть вправо)
-    vx = (Math.random() * 3.5) - 3
+    vx = (Math.random() * 3.5) - 3 // Летят преимущественно влево на мобилках
   } else {
-    // На десктопе симметричный разлет: от -2 до +2
-    vx = (Math.random() - 0.5) * 4
+    vx = (Math.random() - 0.5) * 4 // Симметричный разлет на десктопе
   }
 
   particles.push({
     x: rect.left + rect.width / 2,
     y: rect.top + rect.height / 2,
     vx: vx, 
-    vy: -(Math.random() * 4 + 3), // Вертикальная скорость
-    size: 14 + Math.random() * 14, // Чуть уменьшили разброс размеров (14-28px)
+    vy: -(Math.random() * 4 + 3),
+    size: 14 + Math.random() * 14,
     life: 1.0,
-    decay: 0.005 + Math.random() * 0.008,
+    decay: 0.004 + Math.random() * 0.006, // Чуть замедлили увядание, чтобы они жили дольше
     rotation: Math.random() * Math.PI * 2,
     vRot: (Math.random() - 0.5) * 0.15
   })
 }
 
-// 4. Главный цикл отрисовки (с добавленной прозрачностью)
+// 4. Главный цикл отрисовки
 const updateAndDraw = () => {
   if (!ctx || !canvasRef.value) return
   ctx.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height)
@@ -127,9 +123,8 @@ const updateAndDraw = () => {
     ctx.translate(p.x, p.y)
     ctx.rotate(p.rotation)
     
-    // --- ИЗМЕНЕНИЕ: Базовая прозрачность ---
-    // Максимальная непрозрачность теперь 0.7, а не 1.0
-    const baseOpacity = 0.7 
+    // --- ИЗМЕНЕНИЕ: Увеличенная прозрачность (сниженная непрозрачность) ---
+    const baseOpacity = 0.45 // Было 0.7, теперь 45% видимости
     ctx.globalAlpha = p.life > 0.5 ? baseOpacity : p.life * 2 * baseOpacity
     
     const scale = p.size / 64
@@ -157,7 +152,9 @@ onMounted(() => {
   window.addEventListener('resize', resizeCanvas)
   
   animationFrame = requestAnimationFrame(updateAndDraw)
-  coinInterval = setInterval(spawnCoin, 400)
+  
+  // --- ИЗМЕНЕНИЕ: Более спокойный ритм вылета ---
+  coinInterval = setInterval(spawnCoin, 750) // Было 400 мс, теперь 1 монета в 0.75 сек
 
   interval = setInterval(() => {
     if (!isExpanded.value) {
@@ -231,7 +228,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* Стили остаются без изменений */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
