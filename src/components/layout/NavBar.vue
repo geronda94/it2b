@@ -1,9 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, inject, computed } from 'vue'
-import { useThemeStore } from '@/stores/configs/theme'
 import { useLangStore } from '@/stores/configs/lang'
 
-const themeStore = useThemeStore()
 const langStore = useLangStore()
 const t = inject('t')
 
@@ -12,22 +10,43 @@ const emit = defineEmits(['openContact', 'openModal'])
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
 
-// Структура меню
+// Наш хелпер для Proxy-стора
+const getT = (key, fallback) => {
+  const keys = key.split('.')
+  let val = t.value
+  for (const k of keys) {
+    if (!val) break
+    val = val[k]
+  }
+  return val === key ? fallback : val
+}
+
+// Структура меню с локалями
 const menuItems = computed(() => [
   { 
-    name: t.value?.nav?.solutions || 'Solutions', 
+    name: getT('nav.solutions', 'Solutions'), 
     type: 'anchor', 
     path: '#solutions' 
   },
   { 
-    name: t.value?.nav?.cases || 'Cases', 
-    type: 'link', 
-    path: '/cases' 
+    name: getT('nav.process', 'Process'), 
+    type: 'anchor', 
+    path: '#process' 
   },
   { 
-    name: t.value?.nav?.stack || 'Stack', 
+    name: getT('nav.cases', 'Cases'), 
+    type: 'anchor', 
+    path: '#cases' 
+  },
+  { 
+    name: getT('nav.stack', 'Stack'), 
     type: 'anchor', 
     path: '#stack' 
+  },
+  { 
+    name: getT('nav.btn_start', 'Strart Project'), 
+    type: 'anchor', 
+    path: '#callBlock' 
   }
 ])
 
@@ -37,20 +56,12 @@ const handleScroll = () => {
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
-  if (isMobileMenuOpen.value) {
-    document.body.style.overflow = 'hidden'
-  } else {
-    document.body.style.overflow = ''
-  }
-}
-
-const closeMobileMenu = () => {
-  isMobileMenuOpen.value = false
-  document.body.style.overflow = ''
+  document.body.style.overflow = isMobileMenuOpen.value ? 'hidden' : ''
 }
 
 const handleLinkClick = () => {
-  closeMobileMenu()
+  isMobileMenuOpen.value = false
+  document.body.style.overflow = ''
 }
 
 onMounted(() => window.addEventListener('scroll', handleScroll))
@@ -62,7 +73,6 @@ onUnmounted(() => {
 
 <template>
   <nav :class="[
-    /* ДОБАВЛЕН flex и justify-between */
     'navbar fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out px-4 md:px-10 border-b flex items-center justify-between',
     isScrolled || isMobileMenuOpen
       ? 'bg-[var(--bg-glass)] backdrop-blur-xl border-[var(--border-color)] shadow-sm py-2' 
@@ -70,135 +80,86 @@ onUnmounted(() => {
   ]">
     
     <div class="navbar-start w-auto lg:w-1/2 z-50">
-      <div class="flex items-center gap-3 group cursor-pointer select-none" @click="closeMobileMenu">
+      <router-link to="/" class="flex items-center gap-3 group cursor-pointer select-none" @click="handleLinkClick">
         <div class="relative flex items-center justify-center transition-transform duration-300 group-hover:scale-105 font-[Eurostile,sans-serif] text-2xl font-black tracking-wide text-[var(--text-primary)]">
-            <router-link to="/">
-              <span>IT</span>
-              <span class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] drop-shadow-[0_0_5px_var(--brand-glow)] mx-[1px]">2</span>
-              <span>B</span>
-            </router-link>
+            <span>IT</span>
+            <span class="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] drop-shadow-[0_0_5px_var(--brand-glow)] mx-[1px]">2</span>
+            <span>B</span>
         </div>
-      </div>
+      </router-link>
     </div>
     
     <div class="navbar-center hidden lg:flex">
       <ul class="flex gap-4 text-sm font-medium text-[var(--text-secondary)]">
         <li v-for="(item, index) in menuItems" :key="index">
-          <a 
-            :href="item.path"
+          <component 
+            :is="item.type === 'anchor' ? 'a' : 'router-link'"
+            :href="item.type === 'anchor' ? item.path : undefined"
+            :to="item.type === 'link' ? item.path : undefined"
             class="group relative block px-3 py-2 cursor-pointer transition-colors duration-200 hover:text-[var(--text-primary)]"
           >
             <span class="relative">
               {{ item.name }}
               <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-[var(--brand-primary)] origin-bottom-right scale-x-0 transition-transform duration-200 group-hover:origin-bottom-left group-hover:scale-x-100 group-hover:drop-shadow-[0_0_8px_var(--brand-glow)]"></span>
             </span>
-          </a>
+          </component>
         </li>
       </ul>
     </div>
     
     <div class="navbar-end hidden lg:flex items-center justify-end gap-3 w-1/2">
-      
-      <button 
-        class="nav-btn-icon" 
-        @click="emit('openModal', 'lang')" 
-      >
+      <button class="nav-btn-icon" @click="emit('openModal', 'lang')">
         <font-awesome-icon :icon="['fas', 'globe']" class="text-sm opacity-70" />
         <span>{{ langStore.lang.toUpperCase() }}</span>
       </button>
 
-      <!-- <button 
-        class="nav-btn-icon w-10 justify-center px-0" 
-        @click="themeStore.toggleTheme()"
-      >
-        <transition name="rotate" mode="out-in">
-          <font-awesome-icon v-if="themeStore.currentTheme === 'dark'" :icon="['fas', 'sun']" class="text-sm" key="sun" />
-          <font-awesome-icon v-else :icon="['fas', 'moon']" class="text-sm" key="moon" />
-        </transition>
-      </button> -->
-
-      <button 
-        class="cta-button hidden md:flex ml-2" 
-        @click="emit('openContact')"
-      >
-        <span>Start Project</span>
+      <button class="cta-button hidden md:flex ml-2" @click="emit('openContact')">
+        <span>{{ getT('nav.btn_start', 'Start Project') }}</span>
         <font-awesome-icon :icon="['fas', 'arrow-right']" class="text-xs opacity-70" />
       </button>
-      
     </div>
 
     <div class="navbar-end flex lg:hidden items-center justify-end gap-3 w-auto z-50">
-      
-      <button 
-        class="nav-btn-icon burger__lang px-3" 
-        @click="emit('openModal', 'lang')" 
-      >
+      <button class="nav-btn-icon burger__lang px-3" @click="emit('openModal', 'lang')">
         <font-awesome-icon :icon="['fas', 'globe']" class="text-sm opacity-70 burger__lang-icon" />
         <span>{{ langStore.lang.toUpperCase() }}</span>
       </button>
 
-      <button 
-        class="burger-button ml-2"
-        :class="{ 'active': isMobileMenuOpen }"
-        @click="toggleMobileMenu"
-        aria-label="Toggle menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
+      <button class="burger-button ml-2" :class="{ 'active': isMobileMenuOpen }" @click="toggleMobileMenu">
+        <span></span><span></span><span></span>
       </button>
     </div>
 
     <transition name="mobile-fade">
-      <div 
-        v-if="isMobileMenuOpen"
-        class="fixed inset-0 z-40 bg-[var(--bg-primary)] pt-24 px-6 flex flex-col h-screen overflow-y-auto"
-      >
+      <div v-if="isMobileMenuOpen" class="fixed inset-0 z-40 bg-[var(--bg-primary)] pt-24 px-6 flex flex-col h-screen overflow-y-auto">
         <ul class="flex flex-col gap-6 text-2xl font-bold text-[var(--text-primary)] mb-auto">
-          <li v-for="(item, index) in menuItems" :key="index" style="transition-delay: 100ms">
-            <a 
-              :href="item.path" 
+          <li v-for="(item, index) in menuItems" :key="index">
+            <component 
+              :is="item.type === 'anchor' ? 'a' : 'router-link'"
+              :href="item.type === 'anchor' ? item.path : undefined"
+              :to="item.type === 'link' ? item.path : undefined"
               @click="handleLinkClick" 
               class="flex items-center justify-between group border-b border-[var(--border-color)] pb-4"
             >
               <span class="group-hover:text-[var(--brand-primary)] transition-colors">{{ item.name }}</span>
-              <font-awesome-icon :icon="['fas', 'arrow-right']" class="text-lg opacity-0 -translate-x-4 group-hover:translate-x-0 group-hover:opacity-100 text-[var(--brand-primary)] transition-all duration-300" />
-            </a>
+              <font-awesome-icon :icon="['fas', 'arrow-right']" class="text-[var(--brand-primary)]" />
+            </component>
           </li>
         </ul>
 
         <div class="pb-10 flex flex-col gap-4">
-            <div class="flex gap-4">
-                 <button 
-                    class="nav-btn-icon flex-1 h-12 justify-center text-lg bg-[var(--bg-secondary)]" 
-                    @click="emit('openModal', 'lang'); handleLinkClick()" 
-                >
-                    <font-awesome-icon :icon="['fas', 'globe']" />
-                    <span>{{ langStore.lang.toUpperCase() }}</span>
-                </button>
-
-                <!-- <button 
-                    class="nav-btn-icon flex-1 h-12 justify-center text-lg bg-[var(--bg-secondary)]" 
-                    @click="themeStore.toggleTheme()"
-                >
-                    <font-awesome-icon v-if="themeStore.currentTheme === 'dark'" :icon="['fas', 'sun']" />
-                    <font-awesome-icon v-else :icon="['fas', 'moon']" />
-                </button> -->
-            </div>
-
-            <button 
-                class="cta-button w-full h-14 justify-center text-lg" 
-                @click="emit('openContact'); handleLinkClick()"
-            >
-                <span>Start Project</span>
+            <button class="nav-btn-icon h-12 justify-center text-lg bg-[var(--bg-secondary)]" @click="emit('openModal', 'lang'); handleLinkClick()">
+                <font-awesome-icon :icon="['fas', 'globe']" />
+                <span>{{ langStore.lang.toUpperCase() }}</span>
+            </button>
+            <button class="cta-button w-full h-14 justify-center text-lg" @click="emit('openContact'); handleLinkClick()">
+                <span>{{ getT('nav.btn_start', 'Start Project') }}</span>
             </button>
         </div>
       </div>
     </transition>
-
   </nav>
 </template>
-
 <style scoped>
 .navbar {
     min-height: auto;

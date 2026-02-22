@@ -3,20 +3,21 @@ import { ref, onMounted, onUnmounted, inject, computed } from 'vue'
 
 const t = inject('t')
 
-const phrases = computed(() => [
-  t.value?.widgets?.money_1 || 'Масштабируйте прибыль, а не раздувайте штат',
-  t.value?.widgets?.money_2 || 'Пока конкуренты спят, ваши алгоритмы прогревают лидов',
-  t.value?.widgets?.money_3 || 'Человеческий фактор стоит дорого. Код не ошибается',
-  t.value?.widgets?.money_4 || 'Каждый сэкономленный час команды — это чистая прибыль',
-  t.value?.widgets?.money_5 || 'Быстрый ответ = сделка. Автоматизация не заставляет клиента ждать',
-  t.value?.widgets?.money_6 || 'Один внедренный скрипт окупает себя в первый же месяц',
-  t.value?.widgets?.money_7 || 'Сбор данных о конкурентах — ваше легальное ценовое преимущество',
-  t.value?.widgets?.money_8 || 'Рутину — серверам, стратегию и продажи — людям',
-  t.value?.widgets?.money_9 || 'Системный и автоматизированный бизнес стоит в 3 раза дороже',
-  t.value?.widgets?.money_10 || 'Ваш код не просит отпускных, но генерирует выручку 24/7'
-])
+// --- ИНТЕГРАЦИЯ С КАСТОМНЫМ STORE ---
+const phrases = computed(() => {
+  const translated = t.value?.widgets?.money_phrases
+  
+  // Строгая проверка: если это действительно массив и в нем есть элементы
+  if (Array.isArray(translated) && translated.length > 0) {
+    return translated
+  }
+  
+  // Если локаль еще не загрузилась или ключа нет, возвращаем безопасный фоллбэк
+  return ['...']
+})
 
 const isExpanded = ref(false)
+// Теперь phrases.value гарантированно массив, ошибка [0] исчезнет
 const currentPhrase = ref(phrases.value[0])
 let interval = null
 
@@ -29,7 +30,6 @@ let coinInterval = null
 const particles = []
 let offscreenCoin = null
 
-// 1. Создаем "штамп" монеты в памяти (Offscreen Rendering)
 const createOffscreenCoin = () => {
   const canvas = document.createElement('canvas')
   canvas.width = 64
@@ -75,7 +75,6 @@ const resizeCanvas = () => {
   canvasRef.value.height = window.innerHeight
 }
 
-// 3. Создание частицы
 const spawnCoin = () => {
   if (!coinRef.value || document.hidden) return
   const rect = coinRef.value.getBoundingClientRect()
@@ -84,9 +83,9 @@ const spawnCoin = () => {
   
   let vx
   if (isMobile) {
-    vx = (Math.random() * 3.5) - 3 // Летят преимущественно влево на мобилках
+    vx = (Math.random() * 3.5) - 3 
   } else {
-    vx = (Math.random() - 0.5) * 4 // Симметричный разлет на десктопе
+    vx = (Math.random() - 0.5) * 4 
   }
 
   particles.push({
@@ -96,13 +95,12 @@ const spawnCoin = () => {
     vy: -(Math.random() * 4 + 3),
     size: 14 + Math.random() * 14,
     life: 1.0,
-    decay: 0.004 + Math.random() * 0.006, // Чуть замедлили увядание, чтобы они жили дольше
+    decay: 0.004 + Math.random() * 0.006, 
     rotation: Math.random() * Math.PI * 2,
     vRot: (Math.random() - 0.5) * 0.15
   })
 }
 
-// 4. Главный цикл отрисовки
 const updateAndDraw = () => {
   if (!ctx || !canvasRef.value) return
   ctx.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height)
@@ -123,8 +121,7 @@ const updateAndDraw = () => {
     ctx.translate(p.x, p.y)
     ctx.rotate(p.rotation)
     
-    // --- ИЗМЕНЕНИЕ: Увеличенная прозрачность (сниженная непрозрачность) ---
-    const baseOpacity = 0.45 // Было 0.7, теперь 45% видимости
+    const baseOpacity = 0.45 
     ctx.globalAlpha = p.life > 0.5 ? baseOpacity : p.life * 2 * baseOpacity
     
     const scale = p.size / 64
@@ -135,7 +132,6 @@ const updateAndDraw = () => {
 
   animationFrame = requestAnimationFrame(updateAndDraw)
 }
-// --- END CANVAS LOGIC ---
 
 const toggleWidget = () => {
   if (!isExpanded.value) {
@@ -153,8 +149,7 @@ onMounted(() => {
   
   animationFrame = requestAnimationFrame(updateAndDraw)
   
-  // --- ИЗМЕНЕНИЕ: Более спокойный ритм вылета ---
-  coinInterval = setInterval(spawnCoin, 1200) // Было 400 мс, теперь 1 монета в 0.75 сек
+  coinInterval = setInterval(spawnCoin, 1200) 
 
   interval = setInterval(() => {
     if (!isExpanded.value) {
@@ -209,7 +204,9 @@ onUnmounted(() => {
         class="flex-1 min-w-0 transition-all duration-700 delay-100 ease-out flex flex-col justify-center overflow-hidden"
         :class="isExpanded ? 'opacity-100 translate-x-0 ml-2 sm:ml-3 mr-2 sm:mr-4' : 'opacity-0 -translate-x-8 w-0 h-0 ml-0 mr-0'"
       >
-        <span class="hidden sm:block text-[10px] uppercase tracking-[0.2em] text-[#fbbf24] font-bold mb-0.5 opacity-80">Insight</span>
+        <span class="hidden sm:block text-[10px] uppercase tracking-[0.2em] text-[#fbbf24] font-bold mb-0.5 opacity-80">
+          {{ t?.widgets?.insight_label === 'widgets.insight_label' ? 'Insight' : t?.widgets?.insight_label }}
+        </span>
         <span class="text-xs sm:text-base font-bold text-white leading-snug whitespace-normal sm:whitespace-nowrap">
           {{ currentPhrase }}
         </span>
@@ -228,6 +225,7 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* Стили остаются без изменений */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }

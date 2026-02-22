@@ -3,6 +3,17 @@ import { inject, computed, ref, onMounted, onUnmounted } from 'vue'
 
 const t = inject('t')
 
+// Наш хелпер для безопасного извлечения из Proxy
+const getT = (key, fallback) => {
+  const keys = key.split('.')
+  let val = t.value
+  for (const k of keys) {
+    if (!val) break
+    val = val[k]
+  }
+  return val === key ? fallback : val
+}
+
 // Отслеживание видимости
 const sectionRef = ref(null)
 const isVisible = ref(false)
@@ -24,22 +35,21 @@ onMounted(() => {
 onUnmounted(() => {
   if (observer) observer.disconnect()
 })
-// 6 мощных B2B кейсов с обновленным копирайтом
+
 const cases = computed(() => [
   {
     id: 'parser',
     tags: ['Data Mining', 'Python', 'B2B'],
-    title: t.value?.cases?.parser_title || 'Автоматизация отдела закупок и продаж',
-    // Сделали акцент на конкурентном преимуществе
-    desc: t.value?.cases?.parser_desc || 'Вместо ручного поиска — полная база подрядчиков и клиентов за пару кликов. Пока конкуренты ищут контакты вручную, вы уже отправляете им персонализированные предложения.',
-    accent: '#3b82f6', // Blue
+    title: getT('cases_section.parser_title', 'Автоматизация отдела закупок и продаж'),
+    desc: getT('cases_section.parser_desc', 'Вместо ручного поиска — полная база подрядчиков и клиентов за пару кликов. Пока конкуренты ищут контакты вручную, вы уже отправляете им персонализированные предложения.'),
+    accent: '#3b82f6', 
     metrics: [
-      { label: 'Контактов/нед.', value: '10 000+' },
-      { label: 'Экономия времени', value: '40+ ч' },
-      { label: 'Рост базы', value: '+300%', fullWidth: true }
+      { label: getT('cases_section.parser_metric_1_label', 'Контактов/нед.'), value: '10 000+' },
+      { label: getT('cases_section.parser_metric_2_label', 'Экономия времени'), value: '40+ ч' },
+      { label: getT('cases_section.parser_metric_3_label', 'Рост базы'), value: '+300%', fullWidth: true }
     ],
     scale: {
-      label: 'Эффективность поиска (Ручной vs Автоматика)',
+      label: getT('cases_section.parser_scale_label', 'Эффективность поиска (Ручной vs Автоматика)'),
       percent: 95,
       color: 'from-blue-600 to-cyan-400'
     }
@@ -47,17 +57,16 @@ const cases = computed(() => [
   {
     id: 'custom-admin',
     tags: ['FastAPI', 'Vue 3', 'High-Load'],
-    title: t.value?.cases?.admin_title || 'Пульт управления бизнесом без тормозов',
-    // Перевели тех-характеристики в профит для менеджеров
-    desc: t.value?.cases?.admin_desc || 'Когда стандартные CRM становятся тесными, мы строим систему под ваши задачи. Мгновенный отклик позволяет команде работать без пауз и ожидания загрузки страниц.',
-    accent: '#f59e0b', // Amber
+    title: getT('cases_section.admin_title', 'Пульт управления бизнесом без тормозов'),
+    desc: getT('cases_section.admin_desc', 'Когда стандартные CRM становятся тесными, мы строим систему под ваши задачи. Мгновенный отклик позволяет команде работать без пауз и ожидания загрузки страниц.'),
+    accent: '#f59e0b', 
     metrics: [
-      { label: 'Скорость отклика', value: '<50ms' },
-      { label: 'Ограничений', value: '0' },
-      { label: 'Аптайм системы', value: '99.9%', fullWidth: true }
+      { label: getT('cases_section.admin_metric_1_label', 'Скорость отклика'), value: '<50ms' },
+      { label: getT('cases_section.admin_metric_2_label', 'Ограничений'), value: '0' },
+      { label: getT('cases_section.admin_metric_3_label', 'Аптайм системы'), value: '99.9%', fullWidth: true }
     ],
     scale: {
-      label: 'Ускорение работы менеджеров',
+      label: getT('cases_section.admin_scale_label', 'Ускорение работы менеджеров'),
       percent: 85,
       color: 'from-amber-600 to-yellow-400'
     }
@@ -65,17 +74,16 @@ const cases = computed(() => [
   {
     id: 'fsm-ai',
     tags: ['n8n', 'AI', 'FSM Architecture'],
-    title: t.value?.cases?.ai_title || 'ИИ-ассистент с железной логикой',
-    // Убрали "галлюцинации", добавили "бизнес-скрипт"
-    desc: t.value?.cases?.ai_desc || 'Наши ИИ-боты не ошибаются. Они ведут клиента строго по вашему сценарию, записывают на прием и квалифицируют лидов 24/7 без участия человека.',
-    accent: '#8b5cf6', // Purple
+    title: getT('cases_section.ai_title', 'ИИ-ассистент с железной логикой'),
+    desc: getT('cases_section.ai_desc', 'Наши ИИ-боты не ошибаются. Они ведут клиента строго по вашему сценарию, записывают на прием и квалифицируют лидов 24/7 без участия человека.'),
+    accent: '#8b5cf6', 
     metrics: [
-      { label: 'Контроль диалога', value: '100%' },
-      { label: 'Внедрение', value: '7 дней' },
-      { label: 'Снижение нагрузки на саппорт', value: '-40%', fullWidth: true }
+      { label: getT('cases_section.ai_metric_1_label', 'Контроль диалога'), value: '100%' },
+      { label: getT('cases_section.ai_metric_2_label', 'Внедрение'), value: '7 дней' },
+      { label: getT('cases_section.ai_metric_3_label', 'Снижение нагрузки на саппорт'), value: '-40%', fullWidth: true }
     ],
     scale: {
-      label: 'Следование бизнес-скрипту',
+      label: getT('cases_section.ai_scale_label', 'Следование бизнес-скрипту'),
       percent: 100,
       color: 'from-purple-600 to-fuchsia-400'
     }
@@ -83,17 +91,16 @@ const cases = computed(() => [
   {
     id: 'erp',
     tags: ['Directus', 'API', 'Management'],
-    title: t.value?.cases?.erp_title || 'Все магазины в одном окне',
-    // Подсветили избавление от хаоса в Excel
-    desc: t.value?.cases?.erp_desc || 'Заменили 5 разрозненных систем единой панелью управления. Больше никакой путаницы в остатках на складах и ручного переноса заказов из таблиц и почты.',
-    accent: '#10b981', // Green
+    title: getT('cases_section.erp_title', 'Все магазины в одном окне'),
+    desc: getT('cases_section.erp_desc', 'Заменили 5 разрозненных систем единой панелью управления. Больше никакой путаницы в остатках на складах и ручного переноса заказов из таблиц и почты.'),
+    accent: '#10b981', 
     metrics: [
-      { label: 'Систем в одной', value: '5 в 1' },
-      { label: 'Ошибок учета', value: '0%' },
-      { label: 'Ускорение обработки заказов', value: 'x3 раза', fullWidth: true }
+      { label: getT('cases_section.erp_metric_1_label', 'Систем в одной'), value: '5 в 1' },
+      { label: getT('cases_section.erp_metric_2_label', 'Ошибок учета'), value: '0%' },
+      { label: getT('cases_section.erp_metric_3_label', 'Ускорение обработки заказов'), value: 'x3 раза', fullWidth: true }
     ],
     scale: {
-      label: 'Сокращение операционных издержек',
+      label: getT('cases_section.erp_scale_label', 'Сокращение операционных издержек'),
       percent: 75,
       color: 'from-emerald-600 to-green-400'
     }
@@ -101,17 +108,16 @@ const cases = computed(() => [
   {
     id: 'global-ecom',
     tags: ['E-commerce', 'Payments', 'Scaling'],
-    title: t.value?.cases?.ecom_title || 'Выход на международный рынок',
-    // Фокус на глобальном росте
-    desc: t.value?.cases?.ecom_desc || 'Масштабировали продажи на 5+ стран. Автоматический расчет налогов, мультивалютность и полная интеграция с зарубежной логистикой "под ключ".',
-    accent: '#ef4444', // Red
+    title: getT('cases_section.ecom_title', 'Выход на международный рынок'),
+    desc: getT('cases_section.ecom_desc', 'Масштабировали продажи на 5+ стран. Автоматический расчет налогов, мультивалютность и полная интеграция с зарубежной логистикой "под ключ".'),
+    accent: '#ef4444', 
     metrics: [
-      { label: 'Гео-зон', value: '5+' },
-      { label: 'Валюты', value: 'Авто' },
-      { label: 'Рост конверсии (за рубежом)', value: '+45%', fullWidth: true }
+      { label: getT('cases_section.ecom_metric_1_label', 'Гео-зон'), value: '5+' },
+      { label: getT('cases_section.ecom_metric_2_label', 'Валюты'), value: 'Авто' },
+      { label: getT('cases_section.ecom_metric_3_label', 'Рост конверсии (за рубежом)'), value: '+45%', fullWidth: true }
     ],
     scale: {
-      label: 'Автоматизация расчета налогов и логистики',
+      label: getT('cases_section.ecom_scale_label', 'Автоматизация расчета налогов и логистики'),
       percent: 100,
       color: 'from-red-600 to-rose-400'
     }
@@ -119,17 +125,16 @@ const cases = computed(() => [
   {
     id: 'hr-automation',
     tags: ['n8n', 'HR Tech', 'Integrations'],
-    title: t.value?.cases?.hr_title || 'HR-отдел на автопилоте',
-    // Время - это деньги
-    desc: t.value?.cases?.hr_desc || 'Система сама отбирает резюме и назначает собеседования. Мы убрали рутину, чтобы ваш HR-менеджер занимался развитием людей, а не заполнением карточек.',
-    accent: '#06b6d4', // Cyan
+    title: getT('cases_section.hr_title', 'HR-отдел на автопилоте'),
+    desc: getT('cases_section.hr_desc', 'Система сама отбирает резюме и назначает собеседования. Мы убрали рутину, чтобы ваш HR-менеджер занимался развитием людей, а не заполнением карточек.'),
+    accent: '#06b6d4', 
     metrics: [
-      { label: 'Часов HR сэкономлено', value: '120/мес' },
-      { label: 'Рутины', value: '0%' },
-      { label: 'Скорость онбординга', value: '10 мин', fullWidth: true }
+      { label: getT('cases_section.hr_metric_1_label', 'Часов HR сэкономлено'), value: '120/мес' },
+      { label: getT('cases_section.hr_metric_2_label', 'Рутины'), value: '0%' },
+      { label: getT('cases_section.hr_metric_3_label', 'Скорость онбординга'), value: '10 мин', fullWidth: true }
     ],
     scale: {
-      label: 'Автоматизация внутренних процессов',
+      label: getT('cases_section.hr_scale_label', 'Автоматизация внутренних процессов'),
       percent: 90,
       color: 'from-cyan-600 to-teal-400'
     }
@@ -145,18 +150,18 @@ const cases = computed(() => [
     <div class="max-w-3xl mx-auto text-center mb-16 md:mb-24">
         
         <h2 class="text-[var(--brand-primary)] text-sm font-bold uppercase tracking-[0.2em] mb-4">
-          {{ t?.cases?.badge || 'Флагманские внедрения' }}
+          {{ getT('cases_section.badge', 'Флагманские внедрения') }}
         </h2>
         
         <h3 class="text-3xl md:text-5xl font-black text-white tracking-wide mb-6">
-          Избранные кейсы: <br class="md:hidden" />
+          {{ getT('cases_section.title_start', 'Избранные кейсы:') }} <br class="md:hidden" />
           <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">
-            Цифры вместо слов
+            {{ getT('cases_section.title_end', 'Цифры вместо слов') }}
           </span>
         </h3>
         
         <p class="text-[var(--text-secondary)] text-lg leading-relaxed">
-          Из десятков реализованных проектов мы отобрали 6 самых показательных. Никаких красивых картинок — только сухая выжимка того, как наша архитектура сокращает издержки и приносит прибыль.
+          {{ getT('cases_section.desc', 'Из десятков реализованных проектов мы отобрали 6 самых показательных. Никаких красивых картинок — только сухая выжимка того, как наша архитектура сокращает издержки и приносит прибыль.') }}
         </p>
 
       </div>

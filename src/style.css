@@ -19,6 +19,11 @@
 html {
   scrollbar-width: thin;
   scrollbar-color: var(--text-secondary) var(--bg-primary);
+  scroll-behavior: smooth;
+}
+
+[id] {
+  scroll-margin-top: 80px; /* Высота твоего навбара + небольшой запас */
 }
 
 /* Chrome, Edge, Safari */

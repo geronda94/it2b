@@ -3,50 +3,61 @@ import { inject, computed } from 'vue'
 
 const t = inject('t')
 
+// Безопасный помощник для извлечения текста (чтобы обойти особенность Proxy)
+const getT = (key, fallback) => {
+  const keys = key.split('.')
+  let val = t.value
+  for (const k of keys) {
+    if (!val) break
+    val = val[k]
+  }
+  // Если вернулся сам путь (как это делает твой Proxy), возвращаем fallback
+  return val === key ? fallback : val
+}
+
+// Формируем массив карточек, забирая тексты из локали
 const solutions = computed(() => [
   {
     id: 'ai-agents',
     icon: ['fas', 'robot'],
     color: '#06b6d4',
-    title: t.value?.solutions?.ai_title || 'ИИ-сотрудники 24/7',
-    desc: t.value?.solutions?.ai_desc || 'Ваш менеджер, который никогда не спит. Записывает клиентов, отвечает на вопросы в WhatsApp и квалифицирует лидов, пока вы отдыхаете'
+    title: getT('solutions.ai_title', 'ИИ-сотрудники 24/7'),
+    desc: getT('solutions.ai_desc', 'Ваш менеджер, который никогда не спит. Записывает клиентов, отвечает на вопросы в WhatsApp и квалифицирует лидов, пока вы отдыхаете')
   },
   {
     id: 'b2b-machine',
     icon: ['fas', 'bullseye'],
     color: '#3b82f6',
-    title: t.value?.solutions?.b2b_title || 'Маркетинг на Автопилоте',
-    desc: t.value?.solutions?.b2b_desc || 'Забудьте о холодном поиске вручную. Система сама соберет базу вашей ЦА и отправит им персонализированные предложения через Email, WhatsApp или Telegram'
+    title: getT('solutions.b2b_title', 'Маркетинг на Автопилоте'),
+    desc: getT('solutions.b2b_desc', 'Забудьте о холодном поиске вручную. Система сама соберет базу вашей ЦА и отправит им персонализированные предложения через Email, WhatsApp или Telegram')
   },
   {
     id: 'data-mining',
     icon: ['fas', 'magnifying-glass-chart'],
     color: '#8b5cf6',
-    title: t.value?.solutions?.data_title || 'Мониторинг конкурентов',
-    desc: t.value?.solutions?.data_desc || 'Узнавайте об изменении цен и ассортимента конкурентов в реальном времени. Принимайте решения на основе цифр, а не интуиции'
+    title: getT('solutions.data_title', 'Мониторинг конкурентов'),
+    desc: getT('solutions.data_desc', 'Узнавайте об изменении цен и ассортимента конкурентов в реальном времени. Принимайте решения на основе цифр, а не интуиции')
   },
   {
     id: 'web-platforms',
     icon: ['fas', 'laptop-code'],
     color: '#10b981',
-    title: t.value?.solutions?.web_title || 'Сверхбыстрые сайты',
-    // Слегка докрутили: сместили акцент с Vue.js на удержание клиентов
-    desc: t.value?.solutions?.web_desc || 'Сайты, которые открываются мгновенно. Ваши клиенты больше не уйдут к конкурентам из-за долгой загрузки страницы'
+    title: getT('solutions.web_title', 'Сверхбыстрые сайты'),
+    desc: getT('solutions.web_desc', 'Сайты, которые открываются мгновенно. Ваши клиенты больше не уйдут к конкурентам из-за долгой загрузки страницы')
   },
   {
     id: 'custom-erp',
     icon: ['fas', 'table-columns'],
     color: '#f59e0b',
-    title: t.value?.solutions?.erp_title || 'Управляйте процессами эффективно',
-    desc: t.value?.solutions?.erp_desc || 'Свяжем ваш склад, сайт и отдел продаж. Больше никакой путаницы в Excel — вся аналитика бизнеса перед вашими глазами'
+    title: getT('solutions.erp_title', 'Управляйте процессами эффективно'),
+    desc: getT('solutions.erp_desc', 'Свяжем ваш склад, сайт и отдел продаж. Больше никакой путаницы в Excel — вся аналитика бизнеса перед вашими глазами')
   },
   {
     id: 'high-load',
     icon: ['fas', 'microchip'],
     color: '#ef4444',
-    title: t.value?.solutions?.api_title || 'Ваш сайт не ляжет в пик продаж',
-    // Докрутили: "не упадет в сезон" — это то, чего реально боится бизнес
-    desc: t.value?.solutions?.api_desc || 'Проектируем архитектуру, которая выдержит тысячи заказов одновременно. Гарантируем стабильную работу в сезон распродаж или при резком росте трафика'
+    title: getT('solutions.api_title', 'Ваш сайт не ляжет в пик продаж'),
+    desc: getT('solutions.api_desc', 'Проектируем архитектуру, которая выдержит тысячи заказов одновременно. Гарантируем стабильную работу в сезон распродаж или при резком росте трафика')
   }
 ])
 </script>
@@ -59,12 +70,17 @@ const solutions = computed(() => [
     <div class="container mx-auto px-6 lg:px-12">
       
       <div class="max-w-3xl mx-auto text-center mb-16 md:mb-24">
-        <h2 class="text-[var(--brand-primary)] text-sm font-bold uppercase tracking-[0.2em] mb-4">Наши Решения</h2>
+        <h2 class="text-[var(--brand-primary)] text-sm font-bold uppercase tracking-[0.2em] mb-4">
+          {{ t?.solutions?.section_subtitle === 'solutions.section_subtitle' ? 'Наши Решения' : t?.solutions?.section_subtitle }}
+        </h2>
         <h3 class="text-3xl md:text-5xl font-black text-white font-[Eurostile,sans-serif] tracking-wide mb-6">
-          От хаоса <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">к системе</span>
+          {{ t?.solutions?.section_title_start === 'solutions.section_title_start' ? 'От хаоса' : t?.solutions?.section_title_start }}
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">
+            {{ t?.solutions?.section_title_end === 'solutions.section_title_end' ? 'к системе' : t?.solutions?.section_title_end }}
+          </span>
         </h3>
         <p class="text-[var(--text-secondary)] text-lg leading-relaxed">
-          Оптимизируем ваши бизнес-процессы: убираем рутину и создаем автоматизированные конвейеры, которые экономят бюджет и приносят прибыль.
+          {{ t?.solutions?.section_desc === 'solutions.section_desc' ? 'Оптимизируем ваши бизнес-процессы: убираем рутину и создаем автоматизированные конвейеры, которые экономят бюджет и приносят прибыль.' : t?.solutions?.section_desc }}
         </p>
       </div>
 

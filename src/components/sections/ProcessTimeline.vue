@@ -3,29 +3,39 @@ import { ref, onMounted, onUnmounted, inject, computed } from 'vue'
 
 const t = inject('t')
 
+// Наш спаситель-хелпер для обхода строковых путей из Proxy
+const getT = (key, fallback) => {
+  const keys = key.split('.')
+  let val = t.value
+  for (const k of keys) {
+    if (!val) break
+    val = val[k]
+  }
+  return val === key ? fallback : val
+}
+
 const steps = computed(() => [
   { 
     id: 1, 
-    title: t.value?.process?.step1_title || 'Аудит и Стратегия', 
-    desc: t.value?.process?.step1_desc || 'Изучаем ваши бизнес-процессы "изнутри", находим точки потери денег и проектируем решение, которое окупится максимально быстро.' 
+    title: getT('process.step1_title', 'Аудит и Стратегия'), 
+    desc: getT('process.step1_desc', 'Изучаем ваши бизнес-процессы "изнутри", находим точки потери денег и проектируем решение, которое окупится максимально быстро.') 
   },
   { 
     id: 2, 
-    title: t.value?.process?.step2_title || 'Логика и Прототип', 
-    desc: t.value?.process?.step2_desc || 'Создаем детальный план системы и визуальный макет. Вы утверждаете каркас и логику работы еще до старта основной разработки.' 
+    title: getT('process.step2_title', 'Логика и Прототип'), 
+    desc: getT('process.step2_desc', 'Создаем детальный план системы и визуальный макет. Вы утверждаете каркас и логику работы еще до старта основной разработки.') 
   },
   { 
     id: 3, 
-    title: t.value?.process?.step3_title || 'Разработка и Тесты', 
-    desc: t.value?.process?.step3_desc || 'Пишем чистый код и подключаем сервисы автоматизации. Работаем прозрачно: вы регулярно получаете доступ к готовым частям системы.' 
+    title: getT('process.step3_title', 'Разработка и Тесты'), 
+    desc: getT('process.step3_desc', 'Пишем чистый код и подключаем сервисы автоматизации. Работаем прозрачно: вы регулярно получаете доступ к готовым частям системы.') 
   },
   { 
     id: 4, 
-    title: t.value?.process?.step4_title || 'Запуск и Масштабирование', 
-    desc: t.value?.process?.step4_desc || 'Разворачиваем систему, обучаем ваших сотрудников и обеспечиваем мониторинг 24/7. Помогаем системе расти вместе с вашим бизнесом.' 
+    title: getT('process.step4_title', 'Запуск и Масштабирование'), 
+    desc: getT('process.step4_desc', 'Разворачиваем систему, обучаем ваших сотрудников и обеспечиваем мониторинг 24/7. Помогаем системе расти вместе с вашим бизнесом.') 
   }
 ])
-
 
 const activeStep = ref(0)
 const stepRefs = ref([])
@@ -77,12 +87,12 @@ onUnmounted(() => {
       
       <div class="text-center mb-20">
         <h2 class="text-[var(--brand-primary)] text-sm font-bold uppercase tracking-[0.2em] mb-4">
-          {{ t?.process?.badge || 'Как мы работаем' }}
+          {{ getT('process.badge', 'Как мы работаем') }}
         </h2>
         <h3 class="text-3xl md:text-5xl font-black text-[var(--text-primary)] tracking-tight">
-          {{ t?.process?.title_start || 'Прозрачный процесс' }} <br/>
+          {{ getT('process.title_start', 'Прозрачный процесс') }} <br/>
           <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-secondary)] to-[var(--brand-primary)]">
-            {{ t?.process?.title_end || 'от идеи до релиза' }}
+            {{ getT('process.title_end', 'от идеи до релиза') }}
           </span>
         </h3>
       </div>
@@ -123,7 +133,6 @@ onUnmounted(() => {
             <div 
               class="w-full pl-[76px] md:pl-0 md:w-1/2 transition-all duration-700 z-10"
               :class="[
-                /* Уменьшили отступы от центра (с pr-24 до pr-12), чтобы карточка стала визуально шире */
                 index % 2 === 0 ? 'md:pr-10 lg:pr-16' : 'md:pl-10 lg:pl-16',
                 index <= activeStep ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-12'
               ]"

@@ -3,12 +3,22 @@ import { inject, computed } from 'vue'
 
 const t = inject('t')
 
+// Наш проверенный хелпер для Proxy-стора
+const getT = (key, fallback) => {
+  const keys = key.split('.')
+  let val = t.value
+  for (const k of keys) {
+    if (!val) break
+    val = val[k]
+  }
+  return val === key ? fallback : val
+}
+
 const bentoBlocks = computed(() => [
   {
     id: 'frontend',
-    title: t.value?.bento?.front_title || 'Сайты, которые не тормозят',
-    // Посыл: WordPress — это медленно и дешево, мы — это быстро и надежно.
-    desc: t.value?.bento?.front_desc || 'Ваши клиенты больше не закроют вкладку, не дождавшись загрузки. Мы создаем сайты, которые открываются мгновенно даже при слабом интернете. Это современный стандарт: никакой медлительности старых систем, только комфорт для ваших покупателей.',
+    title: getT('bento.front_title', 'Сайты, которые не тормозят'),
+    desc: getT('bento.front_desc', 'Ваши клиенты больше не закроют вкладку, не дождавшись загрузки...'),
     span: 'col-span-1 md:col-span-2 lg:col-span-4',
     gradient: 'from-[#42b883]/20 via-[#38bdf8]/10 to-[#FFE16B]/20',
     techs: [
@@ -20,9 +30,8 @@ const bentoBlocks = computed(() => [
   },
   {
     id: 'backend',
-    title: t.value?.bento?.backend_title || 'Умная автоматизация под ключ',
-    // Посыл: Мы сделаем любую хотелку, которую не тянет обычная CRM.
-    desc: t.value?.bento?.backend_desc || 'Разрабатываем надежную внутреннюю систему специально под ваши правила. В отличие от готовых сервисов, здесь нет ограничений: мы реализуем любую вашу идею, сохранив данные под строгой защитой.',
+    title: getT('bento.backend_title', 'Умная автоматизация под ключ'),
+    desc: getT('bento.backend_desc', 'Разрабатываем надежную внутреннюю систему специально под ваши правила...'),
     span: 'col-span-1 md:col-span-2 lg:col-span-2',
     gradient: 'from-[#3776AB]/20 to-[#009688]/20', 
     techs: [
@@ -35,9 +44,8 @@ const bentoBlocks = computed(() => [
   },
   {
     id: 'core',
-    title: t.value?.bento?.core_title || 'Быстрая сборка без переплат',
-    // Посыл: Мы экономим ваши деньги, используя "умные конструкторы" там, где это можно.
-    desc: t.value?.bento?.core_desc || 'Мы не изобретаем велосипед и не тратим ваше время впустую. Используем современные инструменты, которые позволяют собрать 80% проекта за считанные дни, экономя ваш бюджет без потери качества.',
+    title: getT('bento.core_title', 'Быстрая сборка без переплат'),
+    desc: getT('bento.core_desc', 'Мы не изобретаем велосипед и не тратим ваше время впустую...'),
     span: 'col-span-1 md:col-span-2 lg:col-span-2',
     gradient: 'from-[#ea4242]/20 to-[#64f]/20',
     techs: [
@@ -47,9 +55,8 @@ const bentoBlocks = computed(() => [
   },
   {
     id: 'data',
-    title: t.value?.bento?.data_title || 'Поиск клиентов и парсинг',
-    // Посыл: Мы достанем любые контакты и автоматизируем рассылки.
-    desc: t.value?.bento?.data_desc || 'Ваш отдел продаж больше не ищет контакты вручную. Наша система сама собирает базы клиентов из карт и справочников, прогревает их рассылками и передает вам уже "горячие" заявки.',
+    title: getT('bento.data_title', 'Поиск клиентов и парсинг'),
+    desc: getT('bento.data_desc', 'Ваш отдел продаж больше не ищет контакты вручную...'),
     span: 'col-span-1 md:col-span-2 lg:col-span-3',
     gradient: 'from-[#2EAD33]/20 to-[#4285F4]/20',
     techs: [
@@ -61,7 +68,7 @@ const bentoBlocks = computed(() => [
   },
   {
     id: 'devops',
-    title: t.value?.bento?.devops_title || 'Работа 24/7',
+    title: getT('bento.devops_title', 'Работа 24/7'),
     span: 'col-span-1 md:col-span-1 lg:col-span-1',
     gradient: 'from-[#2496ed]/20 to-[#E95420]/20',
     techs: [
@@ -79,12 +86,17 @@ const bentoBlocks = computed(() => [
     <div class="container mx-auto px-6 lg:px-12">
       
       <div class="max-w-3xl mx-auto text-center mb-16">
-        <h2 class="text-[var(--brand-primary)] text-sm font-bold uppercase tracking-[0.2em] mb-4">Технологический Стек</h2>
+        <h2 class="text-[var(--brand-primary)] text-sm font-bold uppercase tracking-[0.2em] mb-4">
+          {{ getT('stack_section.badge', 'Технологический Стек') }}
+        </h2>
         <h3 class="text-3xl md:text-5xl font-black text-white font-[Eurostile,sans-serif] tracking-wide mb-6">
-          Современные <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">Инструменты</span>
+          {{ getT('stack_section.title_start', 'Современные') }} 
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]">
+            {{ getT('stack_section.title_end', 'Инструменты') }}
+          </span>
         </h3>
         <p class="text-[var(--text-secondary)] text-lg leading-relaxed">
-          Используем технологии, которые обеспечивают вашему бизнесу скорость и надежность без переплат за устаревшие решения.
+          {{ getT('stack_section.desc', 'Используем технологии, которые обеспечивают вашему бизнесу скорость и надежность...') }}
         </p>
       </div>
 
@@ -108,13 +120,12 @@ const bentoBlocks = computed(() => [
             <h4 class="text-2xl font-bold text-white mb-3 group-hover:text-[var(--text-accent)] transition-colors duration-300 leading-tight">
               {{ block.title }}
             </h4>
-            <p class="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed group-hover:text-[var(--text-primary)] transition-colors duration-300">
+            <p v-if="block.desc" class="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed group-hover:text-[var(--text-primary)] transition-colors duration-300">
               {{ block.desc }}
             </p>
           </div>
 
           <div class="relative z-10 flex flex-wrap items-center gap-3 mt-auto">
-            
             <div 
               v-for="tech in block.techs" 
               :key="tech.name"
@@ -138,7 +149,6 @@ const bentoBlocks = computed(() => [
                 {{ tech.name }}
               </span>
             </div>
-
           </div>
         </div>
 
@@ -146,6 +156,3 @@ const bentoBlocks = computed(() => [
     </div>
   </section>
 </template>
-
-<style scoped>
-</style>

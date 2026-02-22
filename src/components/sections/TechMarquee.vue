@@ -1,5 +1,9 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
+
+
+const t = inject('t')
+
 
 const techList = computed(() => [
   { name: 'Vue 3', slug: 'vuedotjs', color: '#42b883' },
@@ -25,7 +29,7 @@ const techList = computed(() => [
     
     <div class="container mx-auto px-6 mb-6 text-center">
         <h3 class="text-[var(--text-secondary)] text-[10px] font-bold uppercase tracking-[0.3em] opacity-50">
-          Our Technology Stack
+          {{ t.techMarquee.label }}
         </h3>
     </div>
 
