@@ -85,20 +85,19 @@ const handleSubmit = async () => {
   }
 };
 </script>
-
 <template>
-  <section id="contact" class="py-24 lg:py-32 relative z-10 overflow-hidden">
-    <div class="container mx-auto px-6 lg:px-12 relative">
-      <div class="relative max-w-6xl mx-auto rounded-[2.5rem] p-1">
+  <section id="contact" class="py-16 md:py-24 lg:py-32 relative z-10 overflow-hidden">
+    <div class="container mx-auto px-4 md:px-6 lg:px-12 relative">
+      <div class="relative max-w-6xl mx-auto rounded-3xl md:rounded-[2.5rem] p-1">
         <div
-          class="absolute inset-0 bg-gradient-to-r from-[var(--brand-secondary)] via-purple-600 to-[var(--brand-primary)] rounded-[2.5rem] opacity-30 blur-2xl animate-pulse-slow"
+          class="absolute inset-0 bg-gradient-to-r from-[var(--brand-secondary)] via-purple-600 to-[var(--brand-primary)] rounded-3xl md:rounded-[2.5rem] opacity-30 blur-2xl animate-pulse-slow"
         ></div>
         <div
-          class="absolute inset-0 bg-gradient-to-r from-[var(--brand-secondary)] to-[var(--brand-primary)] rounded-[2.5rem] opacity-50"
+          class="absolute inset-0 bg-gradient-to-r from-[var(--brand-secondary)] to-[var(--brand-primary)] rounded-3xl md:rounded-[2.5rem] opacity-50"
         ></div>
 
         <div
-          class="relative bg-[#050b14]/90 backdrop-blur-3xl rounded-[2.4rem] p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 overflow-hidden z-10"
+          class="relative bg-[#050b14]/90 backdrop-blur-3xl rounded-[1.4rem] md:rounded-[2.4rem] p-5 sm:p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-20 overflow-hidden z-10"
         >
           <div
             class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/[0.05] to-transparent pointer-events-none"
@@ -106,7 +105,7 @@ const handleSubmit = async () => {
 
           <div class="w-full lg:w-1/2 relative z-10 text-center lg:text-left">
             <div
-              class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--brand-primary)]/10 border border-[var(--brand-primary)]/30 text-[var(--brand-primary)] text-xs font-bold mb-6 uppercase tracking-[0.2em]"
+              class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--brand-primary)]/10 border border-[var(--brand-primary)]/30 text-[var(--brand-primary)] text-xs font-bold mb-5 md:mb-6 uppercase tracking-[0.2em]"
             >
               <span class="relative flex h-2 w-2">
                 <span
@@ -120,13 +119,13 @@ const handleSubmit = async () => {
             </div>
 
             <h2
-              class="text-3xl md:text-5xl font-black text-white tracking-wide mb-6 leading-tight"
+              class="text-2xl sm:text-3xl md:text-5xl font-black text-white tracking-wide mb-4 md:mb-6 leading-tight"
             >
               {{ getT("cta.title", "Готовы автоматизировать бизнес?") }}
             </h2>
 
             <p
-              class="text-[var(--text-secondary)] text-lg leading-relaxed mb-8"
+              class="text-[var(--text-secondary)] text-base md:text-lg leading-relaxed mb-6 md:mb-8"
             >
               {{
                 getT("cta.desc", "Оставьте заявку, и мы обсудим вашу задачу...")
@@ -134,7 +133,7 @@ const handleSubmit = async () => {
             </p>
 
             <div
-              class="flex flex-col sm:flex-row items-center lg:items-start gap-6 text-sm font-bold text-[var(--text-secondary)]"
+              class="flex flex-col sm:flex-row items-center lg:items-start gap-4 md:gap-6 text-sm font-bold text-[var(--text-secondary)]"
             >
               <div class="flex items-center gap-2">
                 <font-awesome-icon
@@ -155,9 +154,9 @@ const handleSubmit = async () => {
 
           <div class="w-full lg:w-5/12 relative z-10">
             <div
-              class="bg-white/[0.03] border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl"
+              class="bg-white/[0.03] border border-white/10 rounded-[1.2rem] md:rounded-3xl p-5 md:p-8 shadow-2xl"
             >
-              <form @submit.prevent="handleSubmit" class="flex flex-col gap-5">
+              <form @submit.prevent="handleSubmit" class="flex flex-col gap-4 md:gap-5">
                 <div class="relative group">
                   <div
                     class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[var(--text-secondary)] group-focus-within:text-[var(--brand-primary)] transition-colors"
@@ -169,7 +168,7 @@ const handleSubmit = async () => {
                     v-model="formData.name"
                     required
                     :placeholder="getT('cta.name_placeholder', 'Ваше Имя')"
-                    class="w-full bg-[#050b14]/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder-[var(--text-secondary)] outline-none focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] transition-all duration-300"
+                    class="w-full bg-[#050b14]/50 border border-white/10 rounded-xl py-3 md:py-4 pl-11 md:pl-12 pr-4 text-white placeholder-[var(--text-secondary)] outline-none focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] transition-all duration-300"
                   />
                 </div>
 
@@ -189,7 +188,7 @@ const handleSubmit = async () => {
                     :placeholder="
                       getT('cta.contact_placeholder', 'Ваш телефон или Email')
                     "
-                    class="w-full bg-[#050b14]/50 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder-[var(--text-secondary)] outline-none focus:border-[var(--brand-secondary)] focus:ring-1 focus:ring-[var(--brand-secondary)] transition-all duration-300"
+                    class="w-full bg-[#050b14]/50 border border-white/10 rounded-xl py-3 md:py-4 pl-11 md:pl-12 pr-4 text-white placeholder-[var(--text-secondary)] outline-none focus:border-[var(--brand-secondary)] focus:ring-1 focus:ring-[var(--brand-secondary)] transition-all duration-300"
                   />
                 </div>
 
@@ -202,7 +201,7 @@ const handleSubmit = async () => {
                   <select
                     v-model="formData.serviceType"
                     required
-                    class="w-full bg-[#050b14]/50 border border-white/10 rounded-xl py-4 pl-12 pr-10 text-white outline-none focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] transition-all duration-300 appearance-none cursor-pointer"
+                    class="w-full bg-[#050b14]/50 border border-white/10 rounded-xl py-3 md:py-4 pl-11 md:pl-12 pr-10 text-white outline-none focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] transition-all duration-300 appearance-none cursor-pointer"
                     :class="{
                       'text-[var(--text-secondary)]': !formData.serviceType,
                     }"
@@ -279,7 +278,7 @@ const handleSubmit = async () => {
                 <button
                   type="submit"
                   :disabled="isSubmitting || isSuccess"
-                  class="relative w-full h-14 mt-2 flex items-center justify-center gap-3 rounded-xl text-base font-black text-white uppercase tracking-wider overflow-hidden group transition-transform duration-300 hover:scale-[1.02] active:scale-95 disabled:opacity-70 disabled:hover:scale-100"
+                  class="relative w-full h-12 md:h-14 mt-1 md:mt-2 flex items-center justify-center gap-3 rounded-xl text-sm md:text-base font-black text-white uppercase tracking-wider overflow-hidden group transition-transform duration-300 hover:scale-[1.02] active:scale-95 disabled:opacity-70 disabled:hover:scale-100"
                 >
                   <div
                     class="absolute inset-0 transition-all duration-500"
@@ -327,7 +326,7 @@ const handleSubmit = async () => {
                 </button>
 
                 <p
-                  class="text-[10px] text-center text-[var(--text-secondary)] mt-2"
+                  class="text-[10px] text-center text-[var(--text-secondary)] mt-1 md:mt-2 leading-tight"
                 >
                   {{
                     getT(
