@@ -154,7 +154,7 @@ onMounted(() => {
   animationFrame = requestAnimationFrame(updateAndDraw)
   
   // --- ИЗМЕНЕНИЕ: Более спокойный ритм вылета ---
-  coinInterval = setInterval(spawnCoin, 750) // Было 400 мс, теперь 1 монета в 0.75 сек
+  coinInterval = setInterval(spawnCoin, 1200) // Было 400 мс, теперь 1 монета в 0.75 сек
 
   interval = setInterval(() => {
     if (!isExpanded.value) {
