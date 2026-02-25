@@ -24,7 +24,10 @@ import {
   faDollarSign,
   faCheckCircle,
   faUser,
-  faEnvelope
+  faEnvelope,
+  faAddressBook,
+  faBriefcase,
+  faChevronDown
 } from '@fortawesome/free-solid-svg-icons'
 // Импортируем бренды (Brands)
 import { faGithub, faTelegram, faVuejs, faDocker, faNodeJs } from '@fortawesome/free-brands-svg-icons'
@@ -34,7 +37,7 @@ library.add(
   faNetworkWired, faDatabase, faLaptopCode,
   faGithub, faGlobe, faArrowRight, faTelegram, faCheck, faBars, faWind, faServer,
   faVuejs, faDocker, faNodeJs, faRobot, faMagnifyingGlassChart, faBullseye, faTableColumns, faMicrochip,
-  faTimes, faDollarSign, faCheckCircle, faUser, faEnvelope
+  faTimes, faDollarSign, faCheckCircle, faUser, faEnvelope, faAddressBook, faBriefcase, faChevronDown
 )
 
 
